@@ -2,11 +2,11 @@
 set -e
 
 # SQL settings
-export MYSQL_DATABASE=fin_table
-export MYSQL_USER=admin
-export MYSQL_PASSWORD=admin#1
-export MYSQL_PORT=3306
-export MYSQL_HOST=192.168.99.100  # Bind with your local ip or virtualbox image ip, depends on your setting
+export MYSQL_DATABASE=
+export MYSQL_USER=
+export MYSQL_PASSWORD=
+export MYSQL_PORT=
+export MYSQL_HOST=  # Bind with your local ip or virtualbox image ip, depends on your setting
 
 # ==================================== 
 # DO NOT MODIFY ANYTHING BELOW
