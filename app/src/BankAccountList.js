@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import {Form, FormGroup, ControlLabel, FormControl} from 'react-bootstrap'
 // TODO:	1) Include Bootstrap CSS
 //			2) Change the whole thing to table
 //			3) Add delete button so that the list can be removed at any time
@@ -14,7 +14,7 @@ class BankAccountList extends React.Component{
 		this.state = {
 			size: 0,
 			inputAccountName: '',
-			inputAccountAmount: 0,
+			inputAccountAmount: '',
 			listAccount: [],
 		};
 	}
@@ -65,11 +65,32 @@ class BankAccountList extends React.Component{
 				<ul> {listAccount.map((currElement, index) => <li key={index}>{(currElement.name).concat(',').concat(currElement.amount)}</li> )} </ul>
 
 				<p> You have entered {this.state.listAccount.length} account. </p>
+				<form>
+					<FormGroup
+						controlId="formBasicText"
+					>
 
-				<br/> Bank account's name &nbsp;
-				<input type="text" className="bankaccount-name-textbox" value={this.state.inputAccountName} onChange={name => this.updateBankName(name)}/>
-				&nbsp; Amount &nbsp;
-				<input type="text" className="bankaccount-amount-textbox" value={this.state.inputAccountAmount} onChange={amount => this.updateBankAmount(amount)}/> &nbsp;
+					<ControlLabel>Bank account's name</ControlLabel>
+					<FormControl
+						type="text"
+						className="bankaccount-name-textbox"
+						placeholder="Enter account's name"
+						value={this.state.inputAccountName}
+						onChange={name => this.updateBankName(name)}
+					/>
+
+					<ControlLabel>Amount</ControlLabel>
+					<FormControl
+						type="text"
+						className="bankaccount-amount-textbox"
+						placeholder="Amount"
+						value={this.state.inputAccountAmount}
+						onChange={amount => this.updateBankAmount(amount)}
+					/>
+					
+					</FormGroup>
+				</form>
+
 				<button className="addButton" onClick={this.addAccount}>Add account</button>
 			</div>
 		);
