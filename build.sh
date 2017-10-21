@@ -27,9 +27,10 @@ docker run --name sqldb -p ${MYSQL_PORT}:3306  \
 
 # Set up the table
 echo "Setting up table...";
-docker run --rm --name setupdb --link sqldb:mysql \
- -v "$PWD/script":/script mysql sh -c             \
- "mysql -u ${MYSQL_USER} -p${MYSQL_PASSWORD} -D ${MYSQL_DATABASE} -h ${MYSQL_HOST} < /script/initdb.sql"
+docker run --rm --name setupdb --link sqldb:mysql                   \
+ -v "$PWD/script":/script mysql sh -c                               \
+ "mysql -u ${MYSQL_USER} -p${MYSQL_PASSWORD} -D ${MYSQL_DATABASE}   \
+ -h ${MYSQL_HOST} -P ${MYSQL_PORT} < /script/initdb.sql"
 
 # ==================================== 
 # Setting up the backend server
