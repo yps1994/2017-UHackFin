@@ -12,6 +12,14 @@
   font-family: 'Helvetica', sans-serif;
 }
 
+.divider-right-1px {
+  border-right: 3px solid grey
+}
+
+.divider-left-1px {
+  border-left: 3px solid grey
+}
+
 #content-wrapper {
   margin-top: 25px;
   margin-left: 15%;
