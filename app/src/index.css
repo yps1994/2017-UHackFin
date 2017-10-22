@@ -1,0 +1,29 @@
+#header-background {
+  background-color: #ef3939;
+  height:125px;
+}
+
+#header {
+  line-height:125px;
+  text-align: center;
+  color: white;
+  font-weight: bold;
+  font-size: 400%;
+  font-family: 'Helvetica', sans-serif;
+}
+
+.divider-right-1px {
+  border-right: 3px solid grey
+}
+
+.divider-left-1px {
+  border-left: 3px solid grey
+}
+
+#content-wrapper {
+  margin-top: 25px;
+  margin-left: 15%;
+  margin-right: 15%;
+  padding: 0;
+  font-family: 'Helvetica', sans-serif;
+}
