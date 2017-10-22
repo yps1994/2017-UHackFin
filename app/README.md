@@ -6,6 +6,8 @@ To test the webpage,
     a) npm install -g create-react-app
     b) npm install --save react-dom
     c) npm install --save react-bootstrap (Will be used)
+    d) npm install --save react-bootstrap-table
+    e) npm install --save style-loader css-loader
 
 2) Run "npm start"
 3) Website will be automatically open. If not, go to 127.0.0.1:3001.
