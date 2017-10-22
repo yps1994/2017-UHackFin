@@ -1,10 +1,16 @@
-import React, { Component } from 'react';
-import {Form, FormGroup, ControlLabel, FormControl} from 'react-bootstrap'
+import React from 'react';
+import {Form, FormGroup, ControlLabel, FormControl} from 'react-bootstrap';
+import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
+
 // TODO:	1) Include Bootstrap CSS
 //			2) Change the whole thing to table
 //			3) Add delete button so that the list can be removed at any time
 
 // Peter Yeung: ReactJS used huge amount of syntax similar with lambda expression
+
+const cellEditProp = {
+	mode: 'click'
+};
 
 class BankAccountList extends React.Component{
 	constructor(props){
@@ -53,19 +59,23 @@ class BankAccountList extends React.Component{
 			inputAccountAmount: amount.target.value 
 		});
     }
-  
+
+	  
 	// Rendering section
 	render = () => {
 		// get data from state, not from props
 		const listAccount = this.state.listAccount;
-		const currSize = this.state.size;
 
 		return (
+
 			<div> 
-				<ul> {listAccount.map((currElement, index) => <li key={index}>{(currElement.name).concat(',').concat(currElement.amount)}</li> )} </ul>
+				<BootstrapTable data={listAccount} cellEdit={cellEditProp} striped={true} hover={true} condensed={true}>
+					<TableHeaderColumn isKey dataField='name'>Account name</TableHeaderColumn>
+					<TableHeaderColumn dataField='amount'>Amount</TableHeaderColumn>
+				</BootstrapTable>
 
 				<p> You have entered {this.state.listAccount.length} account. </p>
-				<form>
+				<Form>
 					<FormGroup
 						controlId="formBasicText"
 					>
@@ -89,7 +99,7 @@ class BankAccountList extends React.Component{
 					/>
 					
 					</FormGroup>
-				</form>
+				</Form>
 
 				<button className="addButton" onClick={this.addAccount}>Add account</button>
 			</div>
