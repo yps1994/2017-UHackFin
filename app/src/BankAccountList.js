@@ -8,8 +8,14 @@ import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 
 // Peter Yeung: ReactJS used huge amount of syntax similar with lambda expression
 
+function onBeforeSaveCell(row, cellName, cellValue)
+{
+	return true;
+}
+
 const cellEditProp = {
-	mode: 'click'
+	mode: 'click',
+	beforeSaveCell: onBeforeSaveCell
 };
 
 class BankAccountList extends React.Component{
