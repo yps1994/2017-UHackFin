@@ -85,7 +85,7 @@ class BankAccountList extends React.Component {
                         controlId="formBasicText"
                     >
 
-                        <ControlLabel>Bank account's name</ControlLabel>
+                        <ControlLabel>Bank account&#39;s name</ControlLabel>
                         <FormControl
                             type="text"
                             className="bankaccount-name-textbox"
