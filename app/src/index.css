@@ -13,14 +13,18 @@
 }
 
 .divider-right-1px {
-  border-right: 3px solid grey
+  border-right: 3px solid grey;
+  min-height: 400px;
+  max-height: 500px
 }
 
 .divider-left-1px {
-  border-left: 3px solid grey
+  border-left: 3px solid grey;
+  min-height: 400px;
+  max-height: 500px
 }
 
-#content-wrapper {
+#bankaccount-content {
   margin-top: 25px;
   margin-left: 15%;
   margin-right: 15%;
