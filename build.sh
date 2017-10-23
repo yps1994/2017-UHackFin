@@ -36,7 +36,7 @@ docker run --rm --name setupdb --link sqldb:mysql                   \
 # Setting up the backend server
 # ==================================== 
 # We use local Nodejs for development, will be moved to Docker/nodejs for deployment (if really necessary)
-
+echo "Setting up backend...";
 if ! [ -x "$(which node)" ]; then
     echo "Node is not installed. Aborted. "
     exit 1
@@ -48,3 +48,9 @@ if ! [ -x "$(which npm)" ]; then
 fi
 
 cd ./backend && npm install && cd ../
+
+# ==================================== 
+# Setting up the frontend server
+# ==================================== 
+echo "Setting up frontend...";
+cd ./app && npm install && cd ../
