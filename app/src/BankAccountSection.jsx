@@ -52,14 +52,14 @@ export default class BankAccountSection extends React.Component {
 
 
   // It is necessarily to create a function acting as middleman between the components and the textbox values.
-  updateBankName = (name) => {
+  updateInputAccountName = (name) => {
     this.setState({
       inputAccountName: name.target.value
     });
   }
 
 
-  updateBankAmount = (amount) => {
+  updateInputAccountAmount = (amount) => {
     this.setState({
       inputAccountAmount: amount.target.value
     });
@@ -111,7 +111,7 @@ export default class BankAccountSection extends React.Component {
                 className="bankaccount-name-textbox"
                 placeholder="Enter account's name"
                 value={this.state.inputAccountName}
-                onChange={name => this.updateBankName(name)}
+                onChange={name => this.updateInputAccountName(name)}
               />
             </FormGroup>
 
@@ -122,7 +122,7 @@ export default class BankAccountSection extends React.Component {
                 className="bankaccount-amount-textbox"
                 placeholder="Amount"
                 value={this.state.inputAccountAmount}
-                onChange={amount => this.updateBankAmount(amount)}
+                onChange={amount => this.updateInputAccountAmount(amount)}
               />
 
             </FormGroup>
