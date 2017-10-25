@@ -9,22 +9,22 @@ export default class BankAccountTable extends React.Component {
 
 
   onAfterSaveCell = (row, cellName, cellValue) => {
-    this.props.updateParentAccountList(this.updateChildAccountList(this.props.AccountList, row, cellValue));
+    this.props.updateParentAccountList(this.updateChildAccountList(this.props.accountList, row, cellValue));
   }
 
 
-  updateChildAccountList = (AccountList, row, cellValue) => {
-    var index = AccountList.findIndex(i => i.name === row.name);
-    AccountList[index]['amount'] = cellValue;
+  updateChildAccountList = (accountList, row, cellValue) => {
+    var index = accountList.findIndex(i => i.name === row.name);
+    accountList[index]['amount'] = cellValue;
 
-    return(AccountList);
+    return(accountList);
   }
 
 
   // Rendering section
   render = () => {
     // get data from state, not from props
-    const listAccount = this.props.AccountList;
+    const listAccount = this.props.accountList;
     const cellEditProp = {
       mode: 'click',
       beforeSaveCell: this.onBeforeSaveCell,

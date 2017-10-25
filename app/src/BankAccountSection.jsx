@@ -17,13 +17,13 @@ export default class BankAccountSection extends React.Component {
       size: 0,
       inputAccountName: '',
       inputAccountAmount: '',
-      listAccount: [],
+      accountList: [],
     };
   }
 
 
   editAccountAmount = (row, amount) => {
-    this.listAccount[row].amount.setState({ amount });
+    this.accountList[row].amount.setState({ amount });
   }
 
 
@@ -39,15 +39,15 @@ export default class BankAccountSection extends React.Component {
     if (!isValidate(this.state.inputAccountName, this.state.inputAccountAmount))
       return;
 
-    const listAccount = this.state.listAccount;
+    const accountList = this.state.accountList;
 
-    this.state.listAccount.push({
+    this.state.accountList.push({
       name: this.state.inputAccountName,
       amount: this.state.inputAccountAmount
     });
 
     this.setState({ size: this.state.size + 1 });
-    this.setState({ listAccount });
+    this.setState({ accountList });
   }
 
 
@@ -66,17 +66,17 @@ export default class BankAccountSection extends React.Component {
   }
 
 
-  updateBankAccountList = (updatedListAccount) => {
-    this.setState({listAccount: updatedListAccount});
+  updateBankAccountList = (updatedAccountList) => {
+    this.setState({accountList: updatedAccountList});
   }
 
 
-  getAccountNameValidation = (AccountList) => {
+  getAccountNameValidation = (accountList) => {
 
-    if (AccountList == null) return null;
+    if (accountList == null) return null;
 
     const accountName = this.state.inputAccountName;
-    var index = AccountList.findIndex(i => i.name === accountName);
+    var index = accountList.findIndex(i => i.name === accountName);
 
     if (index !== -1 || !accountName) return 'error';
     else return 'success';
@@ -95,15 +95,15 @@ export default class BankAccountSection extends React.Component {
   // Rendering section
   render = () => {
     // get data from state, not from props
-    const listAccount = this.state.listAccount;
+    const accountList = this.state.accountList;
 
     return (
       <div>
         <div className="col-md-6 divider-right-4px">
-          <BankAccountTable AccountList={listAccount} updateParentAccountList={this.updateBankAccountList} />
+          <BankAccountTable accountList={accountList} updateParentAccountList={this.updateBankAccountList} />
 
           <Form>
-            <FormGroup controlId="formBasicText" validationState={this.getAccountNameValidation(listAccount)}>
+            <FormGroup controlId="formBasicText" validationState={this.getAccountNameValidation(accountList)}>
 
               <ControlLabel>Bank account&#39;s name</ControlLabel>
               <FormControl
@@ -131,7 +131,7 @@ export default class BankAccountSection extends React.Component {
           <button className="addButton" onClick={this.addAccount}>Add account</button>
         </div>
         <div className="col-md-6">
-          <BankAccountChart AccountList={listAccount} />
+          <BankAccountChart accountList={accountList} />
         </div>
       </div>
     );

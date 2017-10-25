@@ -14,7 +14,7 @@ export default class BankAccountChart extends React.Component {
 
   render = () => {
 
-    const chartData = convertListAccountData(this.props.AccountList);
+    const chartData = convertListAccountData(this.props.accountList);
 
     if (chartData.labels.length > 0) {
       return (
