@@ -1,6 +1,7 @@
 #header-background {
   background-color: #ef3939;
   height:125px;
+  margin-bottom: 50px;
 }
 
 #header {
@@ -22,6 +23,20 @@
   border-left: 4px solid grey;
   min-height: 400px;
   max-height: 500px
+}
+
+.bankaccount-chart-empty-style {
+  min-height: 400px;
+  max-height: 500px;
+  background: #e97575;
+  border: 16px solid #ef3939;
+  border-radius: 32px;
+
+  text-align:center;
+  line-height:330px;
+  color: white;
+  font-size: 300%;
+  font-family: 'Helvetica', sans-serif;
 }
 
 #bankaccount-content {

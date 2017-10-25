@@ -23,7 +23,7 @@ export default class BankAccountChart extends React.Component {
     }
     else {
       return (
-        <div> Please enter data.</div>
+        <div className="bankaccount-chart-empty-style"> Data will be visualized here.</div>
       );
     }
   }
