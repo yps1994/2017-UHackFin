@@ -10,6 +10,9 @@ export default class BankAccountTable extends React.Component {
     return(accountList);
   }
 
+  onAfterSaveCell = (row, cellName, cellValue) => {
+    this.props.updateParentAccountList(this.updateChildAccountList(this.props.accountList, row, cellValue));
+  }
 
   // Rendering section
   render = () => {
@@ -18,11 +21,12 @@ export default class BankAccountTable extends React.Component {
     const cellEditProp = {
       mode: 'click',
       blurToSave: true,
+      afterSaveCell: this.onAfterSaveCell
     };
 
     return (
 
-        <BootstrapTable data={listAccount} cellEdit={cellEditProp} striped={true} hover={true} condensed={true}>
+        <BootstrapTable data={listAccount} cellEdit={cellEditProp} striped hover condensed>
           <TableHeaderColumn isKey dataField='name'>Account name</TableHeaderColumn>
           <TableHeaderColumn dataField='amount'>Amount</TableHeaderColumn>
         </BootstrapTable>
