@@ -12,6 +12,8 @@ coverage/
 build/
 
 # misc
+apidoc/
+package-lock.json
 setting.json
 .*
 *.log
