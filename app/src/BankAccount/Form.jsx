@@ -47,7 +47,6 @@ export default class BankAccountForm extends React.Component {
   
   // It is necessarily to create a function acting as middleman between the components and the textbox values.
   updateInputAccountName = (name) => {
-
     this.setState({
       inputAccountName: name.target.value
     });
@@ -80,14 +79,11 @@ export default class BankAccountForm extends React.Component {
     if (this.state.inputAccountAmount === '') return null;
     else if (isNumeric(this.state.inputAccountAmount)) return 'success';
     else return 'error';
-  
   }
 
   
   // Rendering section
   render = () => {
-
-    const accountList = this.props.accountList;
 
     return (
       <div>
@@ -133,5 +129,4 @@ function isNumeric(amount) {
   if (isNaN(parsedAmount) || !isFinite(parsedAmount) || parsedAmount < 0) return false;
 
   return true;
-
 }
