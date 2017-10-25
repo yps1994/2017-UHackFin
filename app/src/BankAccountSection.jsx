@@ -70,6 +70,27 @@ export default class BankAccountSection extends React.Component {
     this.setState({listAccount: updatedListAccount});
   }
 
+
+  getAccountNameValidation = (AccountList) => {
+
+    if (AccountList == null) return null;
+
+    const accountName = this.state.inputAccountName;
+    var index = AccountList.findIndex(i => i.name === accountName);
+
+    if (index !== -1 || !accountName) return 'error';
+    else return 'success';
+
+  }
+
+  
+  getAccountAmountValidation = () => {
+
+    if (isValidate("", this.state.inputAccountAmount)) return 'success';
+    else return 'error';
+  
+  }
+
   
   // Rendering section
   render = () => {
@@ -82,7 +103,7 @@ export default class BankAccountSection extends React.Component {
           <BankAccountTable AccountList={listAccount} updateParentAccountList={this.updateBankAccountList} />
 
           <Form>
-            <FormGroup controlId="formBasicText">
+            <FormGroup controlId="formBasicText" validationState={this.getAccountNameValidation(listAccount)}>
 
               <ControlLabel>Bank account&#39;s name</ControlLabel>
               <FormControl
@@ -92,7 +113,9 @@ export default class BankAccountSection extends React.Component {
                 value={this.state.inputAccountName}
                 onChange={name => this.updateBankName(name)}
               />
+            </FormGroup>
 
+            <FormGroup controlId="formBasicText" validationState={this.getAccountAmountValidation()}>
               <ControlLabel>Amount</ControlLabel>
               <FormControl
                 type="text"
