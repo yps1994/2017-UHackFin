@@ -31,6 +31,14 @@ export default class BankAccountSection extends React.Component {
   }
 
 
+  clearAccountFormInput = () => {
+    this.setState({
+      inputAccountAmount: '',
+      inputAccountName: ''
+    });
+  }
+
+
   // Note we should use this.setState instead directly accessing the elements.
   // See http://jamestw.logdown.com/posts/258005-reactjs-state
   addAccount = () => {
@@ -46,6 +54,8 @@ export default class BankAccountSection extends React.Component {
     });
 
     this.setState({ accountList });
+
+    this.clearAccountFormInput();
   }
 
 
