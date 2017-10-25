@@ -36,9 +36,9 @@ export default class BankAccountChart extends React.Component {
 function convertListAccountData(listAccount) {
 
   return {
-    labels: [listAccount.map(function (val) {
+    labels: listAccount.map(function (val) {
       return val.name;
-    })],
+    }),
 
     datasets: [{
       data: listAccount.map(function (val) {
