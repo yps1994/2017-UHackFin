@@ -59,13 +59,26 @@ export default class BankAccountTable extends React.Component {
 
     // Hooking the operation of dropping rows
     const options = {
-      afterDeleteRow: this.onAfterDeleteRow
+      afterDeleteRow: this.onAfterDeleteRow,
+      page: 1,
+      sizePerPageList: [ {
+        text: '5', value: 5
+      } ],
+      sizePerPage: 5,  // which size per page you want to locate as default
+      pageStartIndex: 1, // where to start counting the pages
+      paginationSize: 3,  // the pagination bar size.
+      prePage: 'Prev', // Previous page button text
+      nextPage: 'Next', // Next page button text
+      firstPage: 'First', // First page button text
+      lastPage: 'Last', // Last page button text
+      paginationShowsTotal: this.renderShowsTotal,  // Accept bool or function
+      paginationPosition: 'top'  // default is bottom, top and both is all available
     }
 
     return (
 
         <BootstrapTable data={listAccount} cellEdit={cellEditProp} selectRow={selectRowProp} options={options}
-          deleteRow exportCSV striped hover condensed>
+          deleteRow exportCSV pagination striped hover condensed>
           <TableHeaderColumn isKey dataField='name'>Account name</TableHeaderColumn>
           <TableHeaderColumn dataField='amount' dataFormat={this.amountFormatter}>Amount</TableHeaderColumn>
         </BootstrapTable>
