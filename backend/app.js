@@ -4,7 +4,7 @@ var bodyParser = require('body-parser');
 var mysql = require('mysql');
 
 var index = require('./routes/index');
-var api = require('./routes/api')
+var stocks = require('./routes/stocks')
 
 var con = mysql.createConnection({
   host: process.env.MYSQL_HOST,
@@ -34,7 +34,7 @@ app.use(function(req, res, next) {
 })
 
 app.use('/', index);
-app.use('/api', api);
+app.use('/stocks', stocks);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
