@@ -5,4 +5,4 @@
     2. Run `npm start`,
     3. Server will be create at <http://127.0.0.1:3000>.
 
-* To gernerate the apidoc, run `npm run apidoc`.
+* To create apidoc, run `npm run apidoc`.

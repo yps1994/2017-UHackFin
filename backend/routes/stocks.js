@@ -29,6 +29,7 @@ router.get('/raw/:stockID', function (req, res) {
     if (err) {
       console.log(err);
       res.json({ 'status': 'error' });
+      next(err);
     } else {
       res.json({ 'status': 'OK', 'data': rows });
     }
@@ -67,6 +68,7 @@ router.get('/raw_d/:stockID', function (req, res) {
       if (err) {
         console.log(err);
         res.json({ 'status': 'error' });
+        next(err);
       } else {
         res.json({ 'status': 'OK', 'data': rows });
       }
