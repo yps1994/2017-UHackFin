@@ -36,7 +36,7 @@ export default class BankAccountForm extends React.Component {
 
     accountList.push({
       name: this.state.inputAccountName,
-      amount: this.state.inputAccountAmount
+      amount: parseFloat(this.state.inputAccountAmount).toFixed(2)
     });
 
     this.props.updateParentAccountList(accountList);
@@ -129,7 +129,8 @@ export default class BankAccountForm extends React.Component {
 
 function isNumeric(amount) {
 
-  if (isNaN(amount) || !isFinite(amount) || amount < 0) return false;
+  var parsedAmount = parseInt(amount, 10);
+  if (isNaN(parsedAmount) || !isFinite(parsedAmount) || parsedAmount < 0) return false;
 
   return true;
 
