@@ -15,7 +15,6 @@ export default class BankAccountTable extends React.Component {
   }
 
 
-  // This is terribly confusing. The 'row' here is the key, which IS DIFFERENT from the one defined in updateChildAccountList.
   onAfterDeleteRow = (key) => {
     let accountList = this.props.accountList;
     for (let j = 0; j < key.length; ++j) {
