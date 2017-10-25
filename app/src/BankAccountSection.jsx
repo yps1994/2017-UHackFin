@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
+import { Form, FormGroup, ControlLabel, FormControl, HelpBlock} from 'react-bootstrap';
 
 import BankAccountTable from './BankAccount/Table'
 import BankAccountChart from './BankAccount/Chart'
@@ -113,7 +113,7 @@ export default class BankAccountSection extends React.Component {
           <BankAccountTable accountList={accountList} updateParentAccountList={this.updateBankAccountList} />
 
           <Form>
-            <FormGroup controlId="formBasicText" validationState={this.getAccountNameValidation()}>
+            <FormGroup controlId="formAccountName" validationState={this.getAccountNameValidation()}>
 
               <ControlLabel>Bank account&#39;s name</ControlLabel>
               <FormControl
@@ -123,9 +123,11 @@ export default class BankAccountSection extends React.Component {
                 value={this.state.inputAccountName}
                 onChange={name => this.updateInputAccountName(name)}
               />
+              <FormControl.Feedback/>
+              <HelpBlock>Your account&#39;s name should be different from the above table. </HelpBlock>
             </FormGroup>
 
-            <FormGroup controlId="formBasicText" validationState={this.getAccountAmountValidation()}>
+            <FormGroup controlId="formAccountAmount" validationState={this.getAccountAmountValidation()}>
               <ControlLabel>Amount</ControlLabel>
               <FormControl
                 type="text"
@@ -134,7 +136,8 @@ export default class BankAccountSection extends React.Component {
                 value={this.state.inputAccountAmount}
                 onChange={amount => this.updateInputAccountAmount(amount)}
               />
-
+              <FormControl.Feedback/>
+              <HelpBlock>The amount should be greater than or equal to 0. </HelpBlock>
             </FormGroup>
           </Form>
 
