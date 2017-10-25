@@ -35,7 +35,7 @@ export default class BankAccountSection extends React.Component {
   // See http://jamestw.logdown.com/posts/258005-reactjs-state
   addAccount = () => {
 
-    if (!isValidate(this.state.inputAccountName, this.state.inputAccountAmount))
+    if (this.getAccountAmountValidation() !== "success" || this.getAccountNameValidation() !== "success")
       return;
 
     const accountList = this.state.accountList;
@@ -69,16 +69,17 @@ export default class BankAccountSection extends React.Component {
   }
 
 
-  getAccountNameValidation = (accountList) => {
+  getAccountNameValidation = () => {
+
+    const accountList = this.state.accountList;
+    const inputAccountName = this.state.inputAccountName;
 
     if (accountList == null) return null;
 
-    const accountName = this.state.inputAccountName;
-    var index = accountList.findIndex(i => i.name === accountName);
+    var index = accountList.findIndex(i => i.name === inputAccountName);
 
-    if (index !== -1 || !accountName) return 'error';
+    if (index !== -1 || !inputAccountName) return 'error';
     else return 'success';
-
   }
 
   
@@ -101,7 +102,7 @@ export default class BankAccountSection extends React.Component {
           <BankAccountTable accountList={accountList} updateParentAccountList={this.updateBankAccountList} />
 
           <Form>
-            <FormGroup controlId="formBasicText" validationState={this.getAccountNameValidation(accountList)}>
+            <FormGroup controlId="formBasicText" validationState={this.getAccountNameValidation()}>
 
               <ControlLabel>Bank account&#39;s name</ControlLabel>
               <FormControl
