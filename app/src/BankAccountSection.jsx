@@ -84,7 +84,7 @@ export default class BankAccountSection extends React.Component {
     const accountList = this.state.accountList;
     const inputAccountName = this.state.inputAccountName;
 
-    if (accountList == null) return null;
+    if (accountList == null || inputAccountName === '') return null;
 
     var index = accountList.findIndex(i => i.name === inputAccountName);
 
@@ -95,7 +95,8 @@ export default class BankAccountSection extends React.Component {
   
   getAccountAmountValidation = () => {
 
-    if (isValidate("", this.state.inputAccountAmount)) return 'success';
+    if (this.state.inputAccountAmount === '') return null;
+    else if (isNumeric(this.state.inputAccountAmount)) return 'success';
     else return 'error';
   
   }
@@ -148,11 +149,9 @@ export default class BankAccountSection extends React.Component {
 }
 
 
-function isValidate(name, amount) {
+function isNumeric(amount) {
 
-  if (isNaN(amount) || !isFinite(amount) || amount < 0) {
-    return false;
-  }
+  if (isNaN(amount) || !isFinite(amount) || amount < 0) return false;
 
   return true;
 }
