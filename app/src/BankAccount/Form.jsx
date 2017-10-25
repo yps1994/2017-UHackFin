@@ -125,7 +125,7 @@ export default class BankAccountForm extends React.Component {
 
 function isNumeric(amount) {
 
-  var parsedAmount = parseInt(amount, 10);
+  var parsedAmount = parseFloat(amount, 10);
   if (isNaN(parsedAmount) || !isFinite(parsedAmount) || parsedAmount < 0) return false;
 
   return true;

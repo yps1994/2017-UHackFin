@@ -31,6 +31,14 @@ export default class BankAccountTable extends React.Component {
     this.props.updateParentAccountList(accountList);
   }
 
+  csvFormatter(cell, row) {
+    return `${row.id}: ${cell}`;
+  }
+
+  amountFormatter(cell, row) {
+    var formattedVal = parseFloat(cell).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+    return `$ ${formattedVal}`;
+  }
   // Rendering section
   render = () => {
 
@@ -56,9 +64,10 @@ export default class BankAccountTable extends React.Component {
 
     return (
 
-        <BootstrapTable data={listAccount} cellEdit={cellEditProp} deleteRow={true} selectRow={selectRowProp} options={options} striped hover condensed>
+        <BootstrapTable data={listAccount} cellEdit={cellEditProp} selectRow={selectRowProp} options={options}
+          deleteRow exportCSV striped hover condensed>
           <TableHeaderColumn isKey dataField='name'>Account name</TableHeaderColumn>
-          <TableHeaderColumn dataField='amount'>Amount</TableHeaderColumn>
+          <TableHeaderColumn dataField='amount' dataFormat={this.amountFormatter}>Amount</TableHeaderColumn>
         </BootstrapTable>
     );
   }
