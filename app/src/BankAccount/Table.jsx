@@ -27,6 +27,7 @@ export default class BankAccountTable extends React.Component {
     const listAccount = this.props.accountList;
     const cellEditProp = {
       mode: 'click',
+      blurToSave: true,
       beforeSaveCell: this.onBeforeSaveCell,
       afterSaveCell: this.onAfterSaveCell
     };
