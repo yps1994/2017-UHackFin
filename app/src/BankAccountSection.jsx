@@ -14,7 +14,6 @@ export default class BankAccountSection extends React.Component {
     //this.onAfterSaveCell = this.onAfterSaveCell.bind(this);
     // save data in state
     this.state = {
-      size: 0,
       inputAccountName: '',
       inputAccountAmount: '',
       accountList: [],
@@ -46,7 +45,6 @@ export default class BankAccountSection extends React.Component {
       amount: this.state.inputAccountAmount
     });
 
-    this.setState({ size: this.state.size + 1 });
     this.setState({ accountList });
   }
 
