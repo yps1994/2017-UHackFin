@@ -3,16 +3,6 @@ import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 
 export default class BankAccountTable extends React.Component {
 
-  onBeforeSaveCell = (row, cellName, cellValue) => {
-    return true;
-  }
-
-
-  onAfterSaveCell = (row, cellName, cellValue) => {
-    this.props.updateParentAccountList(this.updateChildAccountList(this.props.accountList, row, cellValue));
-  }
-
-
   updateChildAccountList = (accountList, row, cellValue) => {
     var index = accountList.findIndex(i => i.name === row.name);
     accountList[index]['amount'] = cellValue;
@@ -28,8 +18,6 @@ export default class BankAccountTable extends React.Component {
     const cellEditProp = {
       mode: 'click',
       blurToSave: true,
-      beforeSaveCell: this.onBeforeSaveCell,
-      afterSaveCell: this.onAfterSaveCell
     };
 
     return (
