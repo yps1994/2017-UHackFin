@@ -1,8 +1,8 @@
 import React from 'react';
 import { Form, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
 
-import BankAccountTable from './BankAccount/BankAccountTable'
-import BankAccountChart from './BankAccount/BankAccountChart'
+import BankAccountTable from './BankAccount/Table'
+import BankAccountChart from './BankAccount/Chart'
 // TODO:    
 //          1) Add delete button so that the list can be removed at any time
 
