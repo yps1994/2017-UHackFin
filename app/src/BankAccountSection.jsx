@@ -78,7 +78,7 @@ export default class BankAccountSection extends React.Component {
 
     return (
       <div>
-        <div class="col-md-6 divider-right-1px">
+        <div className="col-md-6 divider-right-1px">
           <BankAccountTable AccountList={listAccount} updateParentAccountList={this.updateBankAccountList} />
 
           <Form>
@@ -108,7 +108,7 @@ export default class BankAccountSection extends React.Component {
           <button className="addButton" onClick={this.addAccount}>Add account</button>
         </div>
 
-        <div class="col-md-6 divider-left-1px">
+        <div className="col-md-6 divider-left-1px">
           <BankAccountChart AccountList={listAccount} />
         </div>
       </div>
