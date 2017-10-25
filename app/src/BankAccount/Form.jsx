@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, FormGroup, ControlLabel, FormControl, HelpBlock} from 'react-bootstrap';
+import { Form, FormGroup, ControlLabel, FormControl, HelpBlock, Button} from 'react-bootstrap';
 
 export default class BankAccountForm extends React.Component {
   constructor(props) {
@@ -116,7 +116,7 @@ export default class BankAccountForm extends React.Component {
             </FormGroup>
           </Form>
 
-          <button className="addButton" onClick={this.addAccount}>Add account</button>
+          <Button className="addButton" bsStyle="primary" onClick={this.addAccount}>Add account</Button>
       </div>
     );
   }
