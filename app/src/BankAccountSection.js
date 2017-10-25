@@ -10,19 +10,11 @@ import {Doughnut} from 'react-chartjs-2'
 
 // Peter Yeung: ReactJS used huge amount of syntax similar with lambda expression
 
-function onBeforeSaveCell(row, cellName, cellValue) {
-  return true;
-}
-
-const cellEditProp = {
-  mode: 'click',
-  beforeSaveCell: onBeforeSaveCell
-};
 
 export default class BankAccountSection extends React.Component {
   constructor(props) {
     super(props);
-
+    //this.onAfterSaveCell = this.onAfterSaveCell.bind(this);
     // save data in state
     this.state = {
       size: 0,
@@ -30,6 +22,10 @@ export default class BankAccountSection extends React.Component {
       inputAccountAmount: '',
       listAccount: [],
     };
+  }
+
+  editAccountAmount = (row, amount) => {
+    this.listAccount[row].amount.setState({ amount });
   }
 
   createAccountObject = (name, amount) => {
@@ -67,6 +63,9 @@ export default class BankAccountSection extends React.Component {
     });
   }
 
+  updateBankAccountList = (updatedListAccount) => {
+    this.setState({listAccount: updatedListAccount});
+  }
 
   // Rendering section
   render = () => {
@@ -76,7 +75,7 @@ export default class BankAccountSection extends React.Component {
     return (
       <div>
         <div class="col-md-6 divider-right-1px">
-          <BankAccountTable AccountList={listAccount} />
+          <BankAccountTable AccountList={listAccount} updateParentAccountList={this.updateBankAccountList} />
 
           <Form>
             <FormGroup controlId="formBasicText">
@@ -114,11 +113,35 @@ export default class BankAccountSection extends React.Component {
 }
 
 class BankAccountTable extends React.Component {
+  constructor(props) {
+    super(props);
+  };
+
+  onBeforeSaveCell = (row, cellName, cellValue) => {
+    return true;
+  }
+
+  onAfterSaveCell = (row, cellName, cellValue) => {
+    this.props.updateParentAccountList(this.updateChildAccountList(this.props.AccountList, row, cellValue));
+  }
+  
+  updateChildAccountList = (AccountList, row, cellValue) => {
+    var index = AccountList.findIndex(i => i.name === row.name);
+    AccountList[index]['amount'] = cellValue;
+
+    return(AccountList);
+  }
 
   // Rendering section
   render = () => {
     // get data from state, not from props
     const listAccount = this.props.AccountList;
+    const cellEditProp = {
+      mode: 'click',
+      beforeSaveCell: this.onBeforeSaveCell,
+      afterSaveCell: this.onAfterSaveCell
+    };
+
 
     return (
 
