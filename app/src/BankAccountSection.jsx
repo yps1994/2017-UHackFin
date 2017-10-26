@@ -1,24 +1,22 @@
 import React from 'react';
 
-import BankAccountTable from './BankAccount/Table'
-import BankAccountChart from './BankAccount/Chart'
-import BankAccountForm from './BankAccount/Form'
+import BankAccountTable from './BankAccount/Table';
+import BankAccountChart from './BankAccount/Chart';
+import BankAccountForm from './BankAccount/Form';
 
 // Peter Yeung: ReactJS used huge amount of syntax similar with lambda expression
 
 export default class BankAccountSection extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props);
     this.state = { accountList: [] };
   }
 
-
-  //This function is a middle-man between different DOM.
+  // This function is a middle-man between different DOM.
   updateBankAccountList = (updatedAccountList) => {
     this.setState({accountList: updatedAccountList});
   }
 
-  
   // Rendering section
   render = () => {
     // get data from state, not from props

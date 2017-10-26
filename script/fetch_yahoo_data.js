@@ -14,7 +14,7 @@ var moment = require('moment');
 var yahooFinance = require('yahoo-finance');
 
 // fetch range
-const DURATION = 7
+const DURATION = 7;
 const SYMBOLS = [
   '0001.HK',
   '0002.HK',
@@ -23,9 +23,9 @@ const SYMBOLS = [
 ];
 
 // Connect to database
-function connectDB(workspace) {
+function connectDB (workspace) {
   // create connection configuration
-  db = mysql.createConnection({
+  var db = mysql.createConnection({
     host: process.env.MYSQL_HOST,
     user: process.env.MYSQL_USER,
     password: process.env.MYSQL_PASSWORD,
@@ -47,14 +47,14 @@ function connectDB(workspace) {
 }
 
 // Fetch data from Yahoo Finance
-function fetchData(workspace) {
+function fetchData (workspace) {
   return when.promise(function (resolve, reject) {
     // fetch data from -1+ duration days to -1 days
     yahooFinance.historical({
       symbols: SYMBOLS,
       from: moment().subtract(DURATION + 1, 'days').format('YYYY-MM-DD'),
       to: moment().subtract(1, 'days').format('YYYY-MM-DD'),
-      period: 'd',
+      period: 'd'
     }, function (err, quotes) {
       if (err) {
         reject(err);
@@ -67,7 +67,7 @@ function fetchData(workspace) {
 }
 
 // Parsing data
-function parseData(workspace) {
+function parseData (workspace) {
   // reformat data into sql statement
   workspace.records = [];
   Object.keys(workspace.data).forEach(function (key) {
@@ -87,9 +87,8 @@ function parseData(workspace) {
   return workspace;
 }
 
-
 // Insert data to database
-function insertData(workspace) {
+function insertData (workspace) {
   // insert the data to sqldb asychronously
   var promises = when.map(workspace.records, function (record) {
     return when.promise(function (resolve, reject) {
@@ -117,7 +116,7 @@ function insertData(workspace) {
 }
 
 // done and disconent db
-function clean(workspace) {
+function clean (workspace) {
   workspace.db.end();
   return workspace;
 }
