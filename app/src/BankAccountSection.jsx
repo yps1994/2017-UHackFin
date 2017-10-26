@@ -3,8 +3,6 @@ import React from 'react';
 import BankAccountTable from './BankAccount/Table'
 import BankAccountChart from './BankAccount/Chart'
 import BankAccountForm from './BankAccount/Form'
-// TODO:    
-//          1) Add delete button so that the list can be removed at any time
 
 // Peter Yeung: ReactJS used huge amount of syntax similar with lambda expression
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, FormGroup, ControlLabel, FormControl, HelpBlock} from 'react-bootstrap';
+import { Form, FormGroup, ControlLabel, FormControl, HelpBlock, Button} from 'react-bootstrap';
 
 export default class BankAccountForm extends React.Component {
   constructor(props) {
@@ -47,7 +47,6 @@ export default class BankAccountForm extends React.Component {
   
   // It is necessarily to create a function acting as middleman between the components and the textbox values.
   updateInputAccountName = (name) => {
-
     this.setState({
       inputAccountName: name.target.value
     });
@@ -80,14 +79,11 @@ export default class BankAccountForm extends React.Component {
     if (this.state.inputAccountAmount === '') return null;
     else if (isNumeric(this.state.inputAccountAmount)) return 'success';
     else return 'error';
-  
   }
 
   
   // Rendering section
   render = () => {
-
-    const accountList = this.props.accountList;
 
     return (
       <div>
@@ -120,7 +116,7 @@ export default class BankAccountForm extends React.Component {
             </FormGroup>
           </Form>
 
-          <button className="addButton" onClick={this.addAccount}>Add account</button>
+          <Button className="addButton" bsStyle="primary" onClick={this.addAccount}>Add account</Button>
       </div>
     );
   }
@@ -129,9 +125,8 @@ export default class BankAccountForm extends React.Component {
 
 function isNumeric(amount) {
 
-  var parsedAmount = parseInt(amount, 10);
+  var parsedAmount = parseFloat(amount, 10);
   if (isNaN(parsedAmount) || !isFinite(parsedAmount) || parsedAmount < 0) return false;
 
   return true;
-
 }
