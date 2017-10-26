@@ -1,5 +1,5 @@
 #header-background {
-  background-color: #ef3939;
+  background-color: #e61616;
   height:125px;
   margin-bottom: 50px;
 }
@@ -13,29 +13,33 @@
   font-family: 'Helvetica', sans-serif;
 }
 
-.divider-right-4px {
-  border-right: 4px solid grey;
-  min-height: 400px;
-  max-height: 500px
+.bankaccount-wrapper {
+
 }
 
-.divider-left-4px {
-  border-left: 4px solid grey;
-  min-height: 400px;
-  max-height: 500px
-}
-
-.bankaccount-chart-empty-style {
+.bankaccount-table {
   min-height: 400px;
   max-height: 500px;
-  background: #e97575;
-  border: 16px solid #ef3939;
+}
+
+.bankaccount-chart {
+  min-height: 400px;
+  max-height: 500px;
+}
+.bankaccount-chart-empty-style {
+  
+  min-height: 400px;
+  max-height: 400px;  
+  padding: 150px 0;
+  background: lightgrey;
+  border: 16px solid grey;
   border-radius: 32px;
+  height: 350px;
 
   text-align:center;
-  line-height:330px;
-  color: white;
-  font-size: 300%;
+
+  color: grey;
+  font-size: 250%;
   font-family: 'Helvetica', sans-serif;
 }
 
@@ -45,4 +49,12 @@
   margin-right: 15%;
   padding: 0;
   font-family: 'Helvetica', sans-serif;
+}
+
+.divider-right-4px {
+  border-right: 4px solid grey;
+}
+
+.divider-left-4px {
+  border-left: 4px solid grey;
 }

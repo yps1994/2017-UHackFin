@@ -25,12 +25,12 @@ export default class BankAccountSection extends React.Component {
     const accountList = this.state.accountList;
 
     return (
-      <div>
-        <div className="col-md-6 divider-right-4px">
+      <div className="bankaccount-wrapper">
+        <div className="col-md-6 bankaccount-table divider-right-4px">
           <BankAccountTable accountList={accountList} updateParentAccountList={this.updateBankAccountList} />
           <BankAccountForm accountList={accountList} updateParentAccountList={this.updateBankAccountList} />
         </div>
-        <div className="col-md-6">
+        <div className="col-md-6 bankaccount-chart">
           <BankAccountChart accountList={accountList} />
         </div>
       </div>
