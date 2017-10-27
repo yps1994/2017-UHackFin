@@ -17,3 +17,6 @@ package-lock.json
 setting.json
 .*
 *.log
+
+# python cache
+__pycache__
