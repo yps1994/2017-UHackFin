@@ -1,6 +1,6 @@
 import React from 'react';
-import { Doughnut } from 'react-chartjs-2'
-import { range } from 'underscore'
+import { Doughnut } from 'react-chartjs-2';
+import { range } from 'underscore';
 
 const options = {
   title: {
@@ -8,21 +8,17 @@ const options = {
     fontSize: 18,
     text: 'Composition of your portfolio'
   }
-}
-
+};
 
 export default class BankAccountChart extends React.Component {
-
   render = () => {
-
     const chartData = convertListAccountData(this.props.accountList);
 
     if (chartData.labels.length > 0) {
       return (
         <Doughnut data={chartData} options={options} />
       );
-    }
-    else {
+    } else {
       return (
         <div className="bankaccount-chart-empty-style"> Please input your bank account data.</div>
       );
@@ -30,11 +26,7 @@ export default class BankAccountChart extends React.Component {
   }
 }
 
-
-//Peter Yeung: The conversion is terribly troublesome. You have to deal with syntax of array and list respectively.
-//https://github.com/jerairrest/react-chartjs-2
-function convertListAccountData(listAccount) {
-
+function convertListAccountData (listAccount) {
   return {
     labels: listAccount.map(function (val) {
       return val.name;
@@ -48,12 +40,11 @@ function convertListAccountData(listAccount) {
         return getColor(i * 3 % 17);
       })
     }]
-  }
+  };
 }
 
-
-//Predefined color because chartJS does not provide any color scheme.........
-function getColor(index) {
+// Predefined color because chartJS does not provide any color scheme
+function getColor (index) {
   var color = ['#00BAF2', '#00BAF2', '#00a7d9', /* light blue */
     '#E80C60', '#E80C60', '#d00a56', /* light pink */
     '#9B26AF', '#9B26AF', '#8b229d', /* light purple */
