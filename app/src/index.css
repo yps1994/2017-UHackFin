@@ -10,11 +10,11 @@
   color: white;
   font-weight: bold;
   font-size: 400%;
-  font-family: 'Helvetica', sans-serif;
+  font-family: Roboto Condensed, 'Helvetica', sans-serif;
 }
 
 .bankaccount-wrapper {
-
+  
 }
 
 .bankaccount-table {
@@ -31,16 +31,16 @@
   min-height: 400px;
   max-height: 400px;  
   padding: 150px 0;
-  background: lightgrey;
+  background: rgb(249, 249, 249);
   border: 16px solid grey;
   border-radius: 32px;
   height: 350px;
 
-  text-align:center;
+  text-align: center;
 
   color: grey;
   font-size: 250%;
-  font-family: 'Helvetica', sans-serif;
+  font-family: Roboto, 'Helvetica', sans-serif;
 }
 
 #bankaccount-content {
