@@ -24,7 +24,10 @@ export default class BankAccountForm extends React.Component {
 
   // Note we should use this.setState instead directly accessing the elements.
   // See http://jamestw.logdown.com/posts/258005-reactjs-state
-  addAccount = () => {
+  addAccount = (e) => {
+
+    e.preventDefault(); //Prevent auto-refresh the webpage after submitting the form.
+
     if (this.getAccountAmountValidation() !== 'success' || this.getAccountNameValidation() !== 'success') { return; }
 
     const accountList = this.props.accountList;
@@ -74,7 +77,7 @@ export default class BankAccountForm extends React.Component {
   render = () => {
     return (
       <div>
-        <Form>
+        <Form onSubmit={this.addAccount}>
           <FormGroup controlId="formAccountName" validationState={this.getAccountNameValidation()}>
 
             <ControlLabel>Bank account&#39;s name</ControlLabel>
@@ -101,9 +104,10 @@ export default class BankAccountForm extends React.Component {
             <FormControl.Feedback/>
             <HelpBlock>The amount should be greater than or equal to 0. </HelpBlock>
           </FormGroup>
+
+          <Button className="addButton" type="submit" bsStyle="primary" >Add account</Button>
         </Form>
 
-        <Button className="addButton" bsStyle="primary" onClick={this.addAccount}>Add account</Button>
       </div>
     );
   }
