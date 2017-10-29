@@ -10,9 +10,9 @@ const options = {
   }
 };
 
-export default class BankAccountChart extends React.Component {
+export default class Chart extends React.Component {
   render = () => {
-    const chartData = convertListAccountData(this.props.accountList);
+    const chartData = convertToChartData(this.props.data);
 
     if (chartData.labels.length > 0) {
       return (
@@ -20,23 +20,23 @@ export default class BankAccountChart extends React.Component {
       );
     } else {
       return (
-        <div className="bankaccount-chart-empty-style"> Please input your bank account data.</div>
+        <div className="chart-empty-style"> Data will be visualized here.</div>
       );
     }
   }
 }
 
-function convertListAccountData (listAccount) {
+function convertToChartData (data) {
   return {
-    labels: listAccount.map(function (val) {
+    labels: data.map(function (val) {
       return val.name;
     }),
 
     datasets: [{
-      data: listAccount.map(function (val) {
+      data: data.map(function (val) {
         return val.amount;
       }),
-      backgroundColor: range(listAccount.length).map(function (i) {
+      backgroundColor: range(data.length).map(function (i) {
         return getColor(i * 3 % 17);
       })
     }]

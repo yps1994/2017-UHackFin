@@ -1,7 +1,7 @@
 import React from 'react';
 
 import BankAccountTable from './BankAccount/Table';
-import BankAccountChart from './BankAccount/Chart';
+import Chart from './Common/Chart';
 import BankAccountForm from './BankAccount/Form';
 
 // Peter Yeung: ReactJS used huge amount of syntax similar with lambda expression
@@ -29,7 +29,7 @@ export default class BankAccountSection extends React.Component {
           <BankAccountForm accountList={accountList} updateParentAccountList={this.updateBankAccountList} />
         </div>
         <div className="col-md-6 bankaccount-chart">
-          <BankAccountChart accountList={accountList} />
+          <Chart data={accountList} />
         </div>
       </div>
     );
