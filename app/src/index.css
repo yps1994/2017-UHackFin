@@ -1,7 +1,6 @@
 #header-background {
   background-color: #e61616;
   height:125px;
-  margin-bottom: 50px;
 }
 
 #header {
@@ -13,6 +12,39 @@
   font-family: Roboto Condensed, 'Helvetica', sans-serif;
 }
 
+#section-text {
+  margin-top: 50px;
+  margin-left: 15%;
+  margin-right: 15%;
+  padding: 0;
+
+  font-weight: bold;
+  font-size: 200%;
+  font-family: Roboto Condensed, 'Helvetica', sans-serif;
+}
+
+hr {
+  margin: 2px;
+  border-color: #eeeeee;
+  border-width: 4px;
+}
+
+.divider-right-4px {
+  border-right: 4px solid #eeeeee;
+}
+
+.divider-left-4px {
+  border-left: 4px solid #eeeeee;
+}
+
+#bankaccount-content {
+  margin-top: 25px;
+  margin-left: 15%;
+  margin-right: 15%;
+  padding: 0;
+  font-family: 'Helvetica', sans-serif;
+}
+
 .bankaccount-table {
   min-height: 400px;
   max-height: 500px;
@@ -22,6 +54,7 @@
   min-height: 400px;
   max-height: 500px;
 }
+
 .chart-empty-style {
   
   min-height: 400px;
@@ -37,36 +70,4 @@
   color: grey;
   font-size: 250%;
   font-family: Roboto, 'Helvetica', sans-serif;
-}
-
-#bankaccount-section-text {
-  margin-left: 15%;
-  margin-right: 15%;
-  padding: 0;
-
-  font-weight: bold;
-  font-size: 200%;
-  font-family: Roboto Condensed, 'Helvetica', sans-serif;
-}
-
-#bankaccount-content {
-  margin-top: 25px;
-  margin-left: 15%;
-  margin-right: 15%;
-  padding: 0;
-  font-family: 'Helvetica', sans-serif;
-}
-
-.divider-right-4px {
-  border-right: 4px solid #eeeeee;
-}
-
-.divider-left-4px {
-  border-left: 4px solid #eeeeee;
-}
-
-hr {
-  margin: 2px;
-  border-color: #eeeeee;
-  border-width: 4px;
 }
