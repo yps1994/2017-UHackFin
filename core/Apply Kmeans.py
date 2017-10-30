@@ -19,15 +19,15 @@ from Kmeans import *
 # In[ ]:
 
 # We need to fill in the following variables first
-MYSQL_DATABASE = "Hackathon_DB"
+MYSQL_DATABASE =
 
-MYSQL_USER = "dev"
+MYSQL_USER = 
 
-MYSQL_PASSWORD = "2017Hackathon"
+MYSQL_PASSWORD = 
 
-MYSQL_PORT = "3306"
+MYSQL_PORT = 
 
-MYSQL_HOST = "143.89.199.165"
+MYSQL_HOST = 
 
 start_date = "2016-10-01"
 end_date = "2017-10-10"
