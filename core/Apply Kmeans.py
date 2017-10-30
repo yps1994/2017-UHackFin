@@ -1,7 +1,7 @@
 
 # coding: utf-8
 
-# In[ ]:
+# In[4]:
 
 #!/usr/bin/env python3
 
@@ -16,10 +16,10 @@ import tensorflow as tf
 from Kmeans import *
 
 
-# In[ ]:
+# In[5]:
 
 # We need to fill in the following variables first
-MYSQL_DATABASE =
+MYSQL_DATABASE = 
 
 MYSQL_USER = 
 
@@ -40,7 +40,7 @@ fetcher.connect(MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DATABASE, MYSQL_PO
 df = fetcher.get_df(start_date, end_date, ids=targets)
 
 
-# In[ ]:
+# In[6]:
 
 Kmeandata=[]
 matrix1=[df['date'].tolist(),df['open'].tolist()]
@@ -73,19 +73,12 @@ for i in range(len(matrix1[0])-10):#10 is number of stock price in two weeks
     
 
 
-# In[ ]:
+# In[23]:
 
-#Kmeans
-index=list(range(len(Kmeandata)))
-np.random.shuffle(index)
-no_of_cluster=4
-Kmeantraining=np.array([Kmeandata[index[i]][:-1] for i in range(int(len(Kmeandata)/10))]).astype('float64')
-centroids, assignments=TFKMeansCluster(Kmeantraining,no_of_cluster)
-
-# 4 cluster with 10% data need 5mins in my computer
+get_ipython().run_cell_magic('time', '', "#Kmeans\nindex=list(range(len(Kmeandata)))\nnp.random.shuffle(index)\nno_of_cluster=3\nKmeantraining=np.array([Kmeandata[index[i]][:-1] for i in range(int(len(Kmeandata)))]).astype('float64')\ncentroids, assignments=TFKMeansCluster(Kmeantraining,no_of_cluster)\n\n# 4 cluster with 10% data need 5mins in my computer")
 
 
-# In[ ]:
+# In[24]:
 
 #the percentage change after7 days  
 count=np.zeros(no_of_cluster)
@@ -100,4 +93,24 @@ for i in range(no_of_cluster):
     print(count[i],np.average(stats[i]),np.std(stats[i]))
     plt.hist(stats[i])
 plt.show()
+
+
+# In[25]:
+
+##visualize the centroids
+view_centroids=[[1] for i in range(len(centroids))]
+for i in range(len(centroids)):
+    for j in range(len(centroids[0])):
+#         print(view_centroids[i][j]*centroids[i][j])
+        view_centroids[i].append(view_centroids[i][j]*(1+centroids[i][j]))
+        
+test=range(len(centroids[0])+1)
+for i in range(len(centroids)):
+    plt.plot(test,view_centroids[i])
+plt.show()
+
+
+# In[ ]:
+
+
 
