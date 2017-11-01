@@ -31,13 +31,13 @@ router.get('/raw/:stockID', function (req, res) {
   var stockID = req.params.stockID;
   db.query('SELECT * FROM stocks_raw AS t1 INNER JOIN stocks_list AS t2 ON t1.id = t2.STOCKCODE \
     WHERE t1.id = ? ORDER BY t1.date DESC LIMIT 7', stockID, function (err, rows) {
-    if (err) {
-      console.log(err);
-      res.json({ 'status': 'error' });
-    } else {
-      res.json({ 'status': 'OK', 'data': rows });
-    }
-  });
+      if (err) {
+        console.log(err);
+        res.json({ 'status': 'error' });
+      } else {
+        res.json({ 'status': 'OK', 'data': rows });
+      }
+    });
 });
 
 /** 

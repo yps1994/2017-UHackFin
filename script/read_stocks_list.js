@@ -63,41 +63,41 @@ function parseData (workspace) {
 
 // Insert data to database
 function insertData(workspace) {
-	// insert the data to sqldb asychronously
-	var promises = when.map(workspace.records, function (record) {
-		return when.promise(function (resolve, reject) {
-			workspace.db.query(record, function (error) {
-				if (error) {
-					reject(error);
-				} else {
-					resolve(record);
-				}
-			});
-		});
-	});
+  // insert the data to sqldb asychronously
+  var promises = when.map(workspace.records, function (record) {
+    return when.promise(function (resolve, reject) {
+      workspace.db.query(record, function (error) {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(record);
+        }
+      });
+    });
+  });
 
-	// check if all the insertion are successfull
-	return when.promise(function (resolve, reject) {
-		promises.done(function (result, err) {
-			if (err) {
-				reject(err);
-			} else {
-				resolve(workspace);
-			}
-		});
-	});
+  // check if all the insertion are successfull
+  return when.promise(function (resolve, reject) {
+    promises.done(function (result, err) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(workspace);
+      }
+    });
+  });
 }
 
 function clean(workspace) {
-	workspace.db.end();
-	return workspace;
+  workspace.db.end();
+  return workspace;
 }
 
 readList({})
   .then(connectDB)
   .then(parseData)
   .then(insertData)
-	.then(clean)
+  .then(clean)
   .done(function (result, err) {
     if (err) {
       console.log(err);

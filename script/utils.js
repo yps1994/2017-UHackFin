@@ -14,14 +14,14 @@ function connectDB() {
 
 function readCSV(src, next) {
   csv().fromFile(src)
-  .on('end_parsed', function(json){
-    next(json);
-  })
-  .on('done', function(err) {
-    if (err) {
-      throw err;
-    }
-  });
+    .on('end_parsed', function(json){
+      next(json);
+    })
+    .on('done', function(err) {
+      if (err) {
+        throw err;
+      }
+    });
 }
 
 
