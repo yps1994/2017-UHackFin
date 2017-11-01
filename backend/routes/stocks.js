@@ -18,21 +18,26 @@ var router = express.Router();
  *          "high": 99.85,
  *          "low": 99,
  *          "open": 99.3,
- *          "close": 99.3
+ *          "close": 99.3,
+ *          "STOCKCODE": "0001.HK",
+ *          "NAME_ENG": "CKH HOLDINGS",
+ *          "NAME_CHI": "長和",
+ *          "BOARD_LOT": 500
  *       }, ... ] 
  *     }
  */
 router.get('/raw/:stockID', function (req, res) {
   var db = req.con;
   var stockID = req.params.stockID;
-  db.query('SELECT * FROM stocks_raw WHERE id = ? ORDER BY date LIMIT 7', stockID, function (err, rows) {
-    if (err) {
-      console.log(err);
-      res.json({ 'status': 'error' });
-    } else {
-      res.json({ 'status': 'OK', 'data': rows });
-    }
-  });
+  db.query('SELECT * FROM stocks_raw AS t1 INNER JOIN stocks_list AS t2 ON t1.id = t2.STOCKCODE \
+    WHERE t1.id = ? ORDER BY t1.date DESC LIMIT 7', stockID, function (err, rows) {
+      if (err) {
+        console.log(err);
+        res.json({ 'status': 'error' });
+      } else {
+        res.json({ 'status': 'OK', 'data': rows });
+      }
+    });
 });
 
 /** 
@@ -54,6 +59,10 @@ router.get('/raw/:stockID', function (req, res) {
  *          "low": 99,
  *          "open": 99.3,
  *          "close": 99.3
+ *          "STOCKCODE": "0001.HK",
+ *          "NAME_ENG": "CKH HOLDINGS",
+ *          "NAME_CHI": "長和",
+ *          "BOARD_LOT": 500
  *       }, ...]
  *     }
  */
@@ -62,7 +71,8 @@ router.get('/raw_d/:stockID', function (req, res) {
   var stockID = req.params.stockID;
   var queryDate1 = req.query.d1;
   var queryDate2 = req.query.d2;
-  db.query('SELECT * FROM stocks_raw WHERE id = ? AND date IN (?, ?)',
+  db.query('SELECT * FROM stocks_raw AS t1 INNER JOIN stocks_list AS t2 ON t1.id = t2.STOCKCODE \
+    WHERE t1.id = ? AND t1.date IN (?, ?)',
     [stockID, queryDate1, queryDate2], function (err, rows) {
       if (err) {
         console.log(err);
