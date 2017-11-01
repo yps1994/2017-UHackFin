@@ -129,4 +129,5 @@ readSymbols({})
 		if (err) {
 			console.log(err);
 		}
+		console.log("Finished fetching data at " + moment().format())
 	});
