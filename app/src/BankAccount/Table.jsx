@@ -76,8 +76,19 @@ export default class BankAccountTable extends React.Component {
       <BootstrapTable data={listAccount} cellEdit={cellEditProp} selectRow={selectRowProp} options={options}
         deleteRow exportCSV pagination striped hover condensed>
         <TableHeaderColumn isKey dataField='name' dataSort>Account name</TableHeaderColumn>
-        <TableHeaderColumn dataField='amount' dataSort dataFormat={this.amountFormatter}>Amount</TableHeaderColumn>
+          <TableHeaderColumn dataField='amount' dataSort editable={{validator: amountValidator}} dataFormat={this.amountFormatter}>Amount</TableHeaderColumn>
       </BootstrapTable>
     );
   }
+}
+
+function amountValidator(amount) {
+  
+    var parsedAmount = parseFloat(amount, 10);
+    
+    if (isNaN(parsedAmount) || !isFinite(parsedAmount) || parsedAmount < 0) {
+      return "Amount must be greater than or equal to 0.";
+    }
+  
+    return true;
 }
