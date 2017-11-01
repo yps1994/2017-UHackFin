@@ -52,7 +52,7 @@ function fetchData (workspace) {
   return when.promise(function (resolve, reject) {
     // fetch data from -1+ duration days to -1 days
     yahooFinance.historical({
-      symbols: SYMBOLS,
+      symbols: workspace.symbols,
       from: moment().subtract(DURATION + 1, 'days').format('YYYY-MM-DD'),
       to: moment().subtract(1, 'days').format('YYYY-MM-DD'),
       period: 'd'
