@@ -56,7 +56,7 @@ function parseData (workspace) {
   
   workspace.records = data.map(function(record) {
     return `REPLACE INTO stocks_list (STOCKCODE, NAME_ENG, NAME_CHI, BOARD_LOT) \
-    VALUES (${record.STOCKCODE}, ${record.NAME_ENG}, ${record.NAME_CHI}, ${record.BOARD_LOT}`
+    VALUES ("${record.STOCKCODE}", "${record.NAME_ENG}", "${record.NAME_CHI}", ${record.BOARD_LOT})`
   });
   return workspace;
 }

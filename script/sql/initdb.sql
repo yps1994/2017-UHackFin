@@ -14,4 +14,4 @@ CREATE TABLE stocks_list (
     NAME_CHI VARCHAR(256),
     BOARD_LOT INT,
     PRIMARY KEY (STOCKCODE)
-);
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
