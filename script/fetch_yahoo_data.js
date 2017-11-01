@@ -12,11 +12,11 @@
 var when = require('when');
 var moment = require('moment');
 var yahooFinance = require('yahoo-finance');
-var utils = require('./utils')
+var utils = require('./utils');
 
 // fetch range
 const DURATION = 1;
-const CSVPATH = 'csv/stocks_id.csv'
+const CSVPATH = 'csv/stocks_id.csv';
 
 // Read stocks symbols
 function readSymbols(workspace) {
@@ -77,7 +77,7 @@ function parseData(workspace) {
 			if (record.open !== null && record.close !== null) {
 				workspace.records.push(`REPLACE INTO stocks_raw (id, date, high, low, open, close) \
       VALUES ('${record.symbol}', '${moment(record.date).format('YYYY-MM-DD')}', ${record.high}, \
-      ${record.low}, ${record.open}, ${record.close});`)
+      ${record.low}, ${record.open}, ${record.close});`);
 			}
 		});
 	});
@@ -129,5 +129,5 @@ readSymbols({})
 		if (err) {
 			console.log(err);
 		}
-		console.log("Finished fetching data at " + moment().format())
+		console.log("Finished fetching data at " + moment().format());
 	});

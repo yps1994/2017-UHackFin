@@ -1,4 +1,4 @@
-var csv = require('csvtojson')
+var csv = require('csvtojson');
 var fs = require('fs');
 var mysql = require('mysql');
 
@@ -21,7 +21,7 @@ function readCSV(src, next) {
     if (err) {
       throw err;
     }
-  })
+  });
 }
 
 

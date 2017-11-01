@@ -10,9 +10,9 @@
  */
 
 var when = require('when');
-var utils = require('./utils')
+var utils = require('./utils');
 
-const CSVPATH = 'csv/stocks_list_HK.csv'
+const CSVPATH = 'csv/stocks_list_HK.csv';
 
 // read the stock list
 function readList(workspace) {
@@ -51,12 +51,12 @@ function parseData (workspace) {
       NAME_ENG: row.NAME_ENG,
       NAME_CHI: row.NAME_CHI,
       BOARD_LOT: parseInt(row.BOARD_LOT.replace(',', ''))
-    }
+    };
   });
   
   workspace.records = data.map(function(record) {
     return `REPLACE INTO stocks_list (STOCKCODE, NAME_ENG, NAME_CHI, BOARD_LOT) \
-    VALUES ("${record.STOCKCODE}", "${record.NAME_ENG}", "${record.NAME_CHI}", ${record.BOARD_LOT})`
+    VALUES ("${record.STOCKCODE}", "${record.NAME_ENG}", "${record.NAME_CHI}", ${record.BOARD_LOT})`;
   });
   return workspace;
 }
