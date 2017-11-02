@@ -1,3 +1,5 @@
+flask
+flask-restfuly
 pandas
 sqlalchemy
 mysql-connector-python

@@ -14,3 +14,8 @@
 
     3. Users may need to fill in the constant variables in `demo.py`
     4. Execute the script by `python3 demo.py`
+
+- To predict data, a `POST` method will be need. 
+    ```
+    curl -H "Content-Type: application/json" -X POST -d '[{"stock":"0002.HK","share": 1000}, {"stock": "0001.HK", "share": 2000}]' http://localhost:5000/risk
+    ```
