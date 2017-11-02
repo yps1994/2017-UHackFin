@@ -6,5 +6,5 @@ import '../node_modules/react-bootstrap-table/dist/react-bootstrap-table-all.min
 
 import Portfolio from './Portfolio';
 
-ReactDOM.render(<Portfolio/>, document.getElementById('bankaccount-content'));
+ReactDOM.render(<Portfolio/>, document.getElementById('portfolio-wrapper'));
 registerServiceWorker();

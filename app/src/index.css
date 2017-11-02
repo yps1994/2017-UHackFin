@@ -37,7 +37,7 @@ hr {
   border-left: 4px solid #eeeeee;
 }
 
-#bankaccount-content {
+#bankaccount-content, #stock-content {
   margin-top: 25px;
   margin-left: 15%;
   margin-right: 15%;
