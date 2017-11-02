@@ -1,30 +1,25 @@
 import React from 'react';
 import {Form, FormGroup, ControlLabel, FormControl, HelpBlock, Button} from 'react-bootstrap';
+import axios from 'axios';
 
 export default class StockForm extends React.Component {
   constructor (props) {
     super(props);
 
     this.state = {
-      inputStockID: '',
-      inputStockLots: '',
-      inputStockBuyDate: '',
-      newStockData: []
+      inputStockCode: '',
+      inputStockShares: '',
+      inputStockTradingDay: '',
+      inputStockBuyingPrice: '',
     };
-  }
-
-  async fetchStockData(inputStockID, buyDate) {
-
-    const response = await fetch("http://143.89.19.10:3000/stocks/raw_d/" + inputStockID + "/?d1=" + buyDate);
-    this.state.newStockData = response.json;
-
   }
 
   clearStockFormInput = () => {
     this.setState({
-      inputStockID: '',
-      inputStockLots: '',
-      inputStockBuyDate: ''
+      inputStockCode: '',
+      inputStockShares: '',
+      inputStockTradingDay: '',
+      inputStockBuyingPrice: ''
     });
   };
 
@@ -34,40 +29,62 @@ export default class StockForm extends React.Component {
 
     e.preventDefault(); //Prevent auto-refresh the webpage after submitting the form.
 
-    if (this.getStockLotsValidation() !== 'success') { return; }
+    if (this.getStockSharesValidation() !== 'success') { return; }
 
-    this.fetchStockData(this.state.inputStockID, this.state.inputStockBuyDate);
+    axios.get("http://143.89.19.10:3000/stocks/raw_d/" + this.state.inputStockCode + "/?d1=" + this.state.inputStockTradingDay)
+    .then((response) => {
+      const stockList = this.props.stockList;
+      const ret = response.data.data[0];
 
-    const stockList = this.props.stockList;
+      stockList.push({
+        code: ret.STOCKCODE,
+        name: ret.NAME_ENG,
+        tradingDay: ret.date,
+        shares: this.state.inputStockShares,
+        buyingPrice: this.state.inputStockBuyingPrice,
+        currentPrice: ret.close,
+        earn: (this.state.inputStockShares * (ret.close - this.state.inputStockBuyingPrice)).toFixed(2),
+        amount: parseFloat(this.state.inputStockCode).toFixed(2)
+      });
 
-    stockList.push({
-      name: this.state.inputStockLots,
-      amount: parseFloat(this.state.inputStockID).toFixed(2)
+      this.props.updateParentStockList(stockList);
+
+      this.clearStockFormInput();
+    })
+    .catch((error) => {
+      console.log(error);
     });
-
-    this.props.updateParentStockList(stockList);
-
-    this.clearStockFormInput();
-    this.newStockData = [];
   }
 
   // It is necessarily to create a function acting as middleman between the components and the textbox values.
-  updateInputStockID = (id) => {
+  updateInputStockCode = (code) => {
     this.setState({
-      inputStockID: id.target.value
+      inputStockCode: code.target.value
     });
   }
 
-  updateInputStockLots = (lots) => {
+  updateInputStockShares = (shares) => {
     this.setState({
-      inputStockLots: lots.target.value
+      inputStockShares: shares.target.value
+    });
+  }
+
+  updateInputStockBuyingPrice = (buyingPrice) => {
+    this.setState({
+      inputStockBuyingPrice: buyingPrice.target.value
+    });
+  }
+
+  updateInputStockTradingDay = (tradingDay) => {
+    this.setState({
+      inputStockTradingDay: tradingDay.target.value
     });
   }
 
 
-  getStockLotsValidation = () => {
-    if (this.state.inputStockLots === '') return null;
-    else if (isNumeric(this.state.inputStockLots)) return 'success';
+  getStockSharesValidation = () => {
+    if (this.state.inputStockShares === '') return null;
+    else if (isNumeric(this.state.inputStockShares)) return 'success';
     else return 'error';
   }
 
@@ -76,31 +93,57 @@ export default class StockForm extends React.Component {
     return (
       <div>
         <Form onSubmit={this.addStock}>
-          <FormGroup controlId="formStockID">
+          <FormGroup controlId="formStockCode">
 
-            <ControlLabel>Stock&#39;s ID</ControlLabel>
+            <ControlLabel>Stock Code</ControlLabel>
             <FormControl
               type="text"
-              className="stock-name-textbox"
-              placeholder="Enter Stock ID"
-              value={this.state.inputStockID}
-              onChange={name => this.updateInputStockID(name)}
+              className="stock-code-textbox"
+              placeholder="Enter Stock Code"
+              value={this.state.inputStockCode}
+              onChange={name => this.updateInputStockCode(name)}
             />
             <FormControl.Feedback/>
-            <HelpBlock>Your stock ID must exist in our database. </HelpBlock>
+            <HelpBlock>Your stock code must exist in our database. </HelpBlock>
           </FormGroup>
 
-          <FormGroup controlId="formStocklots" validationState={this.getStockLotsValidation()}>
-            <ControlLabel>Lots</ControlLabel>
+          <FormGroup controlId="formStockShares" validationState={this.getStockSharesValidation()}>
+            <ControlLabel>Shares</ControlLabel>
             <FormControl
               type="text"
-              className="stock-lots-textbox"
-              placeholder="Lots"
-              value={this.state.inputAccountAmount}
-              onChange={amount => this.updateInputStockLots(amount)}
+              className="stock-shares-textbox"
+              placeholder="Shares"
+              value={this.state.inputStockShares}
+              onChange={amount => this.updateInputStockShares(amount)}
             />
             <FormControl.Feedback/>
-            <HelpBlock>The amount should be greater than or equal to 0. </HelpBlock>
+            <HelpBlock>The stock share should be greater than or equal to 0. </HelpBlock>
+          </FormGroup>
+
+          <FormGroup controlId="formStockTradingDay">
+            <ControlLabel>Trading Day</ControlLabel>
+            <FormControl
+              type="text"
+              className="stock-trading-day-textbox"
+              placeholder="Trading Day"
+              value={this.state.inputStockTradingDay}
+              onChange={amount => this.updateInputStockTradingDay(amount)}
+            />
+            <FormControl.Feedback/>
+            <HelpBlock>The trading day of the stock must be valid. </HelpBlock>
+          </FormGroup>
+
+          <FormGroup controlId="formStockBuyingPrice">
+            <ControlLabel>Buying Price</ControlLabel>
+            <FormControl
+              type="text"
+              className="stock-buying-price-textbox"
+              placeholder="Buying Price"
+              value={this.state.inputStockBuyingPrice}
+              onChange={price => this.updateInputStockBuyingPrice(price)}
+            />
+            <FormControl.Feedback/>
+            <HelpBlock>The buying price of the stock. </HelpBlock>
           </FormGroup>
 
           <Button className="addButton" type="submit" bsStyle="primary" >Add stock</Button>

@@ -15,7 +15,7 @@ export default class BankAccountSection extends React.Component {
     const accountList = this.props.accountList;
 
     return (
-      <div>
+      <div id="bankaccount-wrapper">
         <div id="section-text">
           1. Bank Account <hr/>
         </div>

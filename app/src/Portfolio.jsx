@@ -31,10 +31,8 @@ export default class Portfolio extends React.Component {
 
     return (
       <div>
-        <div>
           <BankAccountSection accountList={accountList} updateParentAccountList={this.updateBankAccountList} />
-        </div>
-        <StockSection stockList={stockList} updateParentStockList={this.updateStockList} />
+          <StockSection stockList={stockList} updateParentStockList={this.updateStockList} />
       </div>
     );
   }
