@@ -1,8 +1,11 @@
+import logging
+
 import flask
 import flask_restful
 
 import utils.predict
 from routes import index, risk_api
+
 
 app = flask.Flask(__name__)
 predictor = utils.predict.Predictor(app, "data/null.pkl")
