@@ -1,5 +1,3 @@
-import logging
-
 import flask
 import flask_restful
 
