@@ -1,5 +1,6 @@
 flask
-flask-restfuly
+flask-restful
 pandas
+sklearn
 sqlalchemy
 mysql-connector-python
