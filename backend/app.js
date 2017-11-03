@@ -2,6 +2,7 @@ var express = require('express');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 var mysql = require('mysql');
+var cors = require('cors');
 
 var index = require('./routes/index');
 var stocks = require('./routes/stocks');
@@ -23,7 +24,7 @@ con.connect(function (err) {
 });
 
 var app = express();
-
+app.use(cors());
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
