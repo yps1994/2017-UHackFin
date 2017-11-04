@@ -11,6 +11,7 @@ export default class StockSection extends React.Component {
   render = () => {
     // get data from state, not from props
     const stockList = this.props.stockList;
+    const user_id = this.props.user_id;
 
     return (
       <div id="stock-wrapper">
@@ -19,7 +20,7 @@ export default class StockSection extends React.Component {
         </div>
         <div id="stock-content">
           <div className="stock-table">
-            <StockTable stockList={stockList} updateParentStockList={this.props.updateParentStockList} />
+            <StockTable user_id={user_id} stockList={stockList} updateParentStockList={this.props.updateParentStockList} />
           </div>
             <div className="col-md-6 stock-form divider-right-4px">
             <StockForm stockList={stockList} updateParentStockList={this.props.updateParentStockList} />

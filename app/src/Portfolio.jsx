@@ -49,11 +49,12 @@ export default class Portfolio extends React.Component {
     // get data from state, not from props
     const accountList = this.state.accountList;
     const stockList = this.state.stockList;
+    const user_id = this.state.user_id;
 
     return (
       <div>
-          <BankAccountSection accountList={accountList} updateParentAccountList={this.updateBankAccountList} />
-          <StockSection stockList={stockList} updateParentStockList={this.updateStockList} />
+          <BankAccountSection user_id={user_id} accountList={accountList} updateParentAccountList={this.updateBankAccountList} />
+          <StockSection user_id={user_id} stockList={stockList} updateParentStockList={this.updateStockList} />
       </div>
     );
   }

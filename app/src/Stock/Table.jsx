@@ -17,12 +17,19 @@ export default class StockTable extends React.Component {
   }
 
   onAfterDeleteRow = (key) => {
+
     let stockList = this.props.stockList;
     for (let j = 0; j < key.length; ++j) {
       var index = stockList.findIndex(i => i.id === key[j]);
 
       // If the index cannot be found (which supposed it won't happen)
       if (index !== -1) {
+        let customDbObjectToDelete = { 
+          user_id: this.props.user_id,
+          stock_code: stockList[index]['code'],
+          stock_share: stockList[index]['shares']
+        }
+
         stockList.splice(index, 1);
       }
     }
