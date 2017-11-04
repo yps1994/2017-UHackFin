@@ -7,6 +7,7 @@ export default class StockTable extends React.Component {
     var index = stockList.findIndex(i => i.name === row.name);
     stockList[index][cellName] = cellValue;
     stockList[index]['earn'] = (stockList[index]['currentPrice'] - stockList[index]['buyingPrice']) * stockList[index]['shares'];
+    stockList[index]['amount'] = (stockList[index]['currentPrice'] * stockList[index]['shares']);
 
     return (stockList);
   }
