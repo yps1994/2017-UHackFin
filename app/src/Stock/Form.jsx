@@ -35,7 +35,11 @@ export default class StockForm extends React.Component {
   }
 
   getStockData = (stockCode, day) => {
-    return axios.get("http://143.89.19.10:3000/stocks/raw_d/" + this.state.inputStockCode + "/?d1=" + (this.state.inputStockTradingDay).add(2, 'days').format('YYYY-MM-DD'));
+    return axios.get("http://143.89.19.10:3000/stocks/raw_d/" + this.state.inputStockCode + "/?d1=" + (this.state.inputStockTradingDay).format('YYYY-MM-DD'));
+  }
+
+  getRiskIndicator = (stockCode) => {
+    return axios.get("http://143.89.199.165:27960/stat/" + stockCode);
   }
 
   addStock = (e) => {
@@ -44,12 +48,14 @@ export default class StockForm extends React.Component {
 
     if (this.getStockSharesValidation() !== 'success') { return; }
 
-    axios.all([this.getStockHotness(this.state.inputStockCode), this.getStockData(this.state.inputStockCode, this.state.inputStockTradingDay)])
-    .then(axios.spread( (hotness, response) => {
+    axios.all([this.getStockHotness(this.state.inputStockCode), this.getStockData(this.state.inputStockCode, this.state.inputStockTradingDay), this.getRiskIndicator(this.state.inputStockCode)])
+    .then(axios.spread( (hotness, response, risk) => {
 
       const stockList = this.props.stockList;
       const ret = response.data.data[0];
       const ret_hotness = hotness.data.data;
+      const ret_risk = risk.data.data;
+
       var buyingPrice = this.state.inputStockBuyingPrice;
       
       if (isNaN(buyingPrice) || !isFinite(buyingPrice) || buyingPrice === '') {
@@ -60,7 +66,7 @@ export default class StockForm extends React.Component {
         id: stockList.length + 1,
         code: ret.STOCKCODE,
         name: ret.NAME_ENG,
-        tradingDay: String(ret.date).slice(0, String(ret.date).indexOf("T")),
+        tradingDay: this.state.inputStockTradingDay.format("YYYY-MM-DD"),
         shares: Number(this.state.inputStockShares),
         buyingPrice: Number(buyingPrice),
         currentPrice: Number(ret.close),
