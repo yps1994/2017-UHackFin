@@ -1,5 +1,6 @@
 import React from 'react';
-
+import axios from 'axios';
+import {_} from 'underscore';
 import BankAccountSection from './BankAccountSection';
 import StockSection from './StockSection';
 
@@ -9,6 +10,7 @@ export default class Portfolio extends React.Component {
   constructor (props) {
     super(props);
     this.state = { 
+      user_id: 1,
       accountList: [],
       stockList: []
     };
@@ -21,6 +23,26 @@ export default class Portfolio extends React.Component {
 
   updateStockList = (updatedStockList) => {
     this.setState({stockList: updatedStockList});
+
+    var grouppedStockCodeList = _(this.state.stockList).groupBy('code');
+    var grouppedStockSharesList = _(grouppedStockCodeList).map(function(grouppedValue,key) {
+      return {
+        user_id: this.state.user_id,
+        code: key,
+        totalShares: _(grouppedValue).reduce(function (m, x) { return m + x.shares; }, 0)
+      };
+    }, this);
+
+    grouppedStockSharesList.forEach(function (item) {
+      console.log(item);
+      /*axios.post('http://10.89.87.156:3000/stocks/post', item)
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });*/
+    });
   }
 
   // Rendering section
