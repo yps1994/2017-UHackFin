@@ -12,6 +12,15 @@
   font-family: Roboto Condensed, 'Helvetica', sans-serif;
 }
 
+#portfolio-wrapper {
+  margin-bottom: 150px
+}
+
+#footer-background {
+  background-color: #e61616;
+  height: 125px;
+}
+
 #section-text {
   margin-top: 50px;
   margin-left: 15%;
