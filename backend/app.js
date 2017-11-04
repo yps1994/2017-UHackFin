@@ -6,6 +6,7 @@ var cors = require('cors');
 
 var index = require('./routes/index');
 var stocks = require('./routes/stocks');
+var hot = require('./routes/hot');
 
 var con = mysql.createConnection({
   host: process.env.MYSQL_HOST,
@@ -36,6 +37,7 @@ app.use(function (req, res, next) {
 
 app.use('/', index);
 app.use('/stocks', stocks);
+app.use('/stocks', hot);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

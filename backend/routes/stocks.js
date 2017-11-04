@@ -87,7 +87,7 @@ router.post('/post', function (req, res) {
   var db = req.con;
   const body = req.body;
   body.forEach(function(element) {
-    var user_id = parseInt(element.user_id);
+    var user_id = element.user_id;
     var stock_code = element.stock_code;
     var stock_share = parseInt(element.stock_share);
     db.query('REPLACE INTO user_data (ID, StockNo, SHARE) VALUES (?, ?, ?)', 
