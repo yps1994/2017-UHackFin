@@ -34,7 +34,6 @@ function convertToChartData (data) {
 
     datasets: [{
       data: data.map(function (val) {
-        console.log(val.amount);
         return val.amount;
       }),
       backgroundColor: range(data.length).map(function (i) {
