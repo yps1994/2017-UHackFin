@@ -16,7 +16,7 @@ export default class StockSection extends React.Component {
     return (
       <div id="stock-wrapper">
         <div id="section-text">
-          2. Bank Account <hr/>
+          2. Stock Portfolio <hr/>
         </div>
         <div id="stock-content">
           <div className="stock-table">
