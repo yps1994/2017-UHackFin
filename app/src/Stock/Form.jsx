@@ -40,7 +40,7 @@ export default class StockForm extends React.Component {
         id: stockList.length + 1,
         code: ret.STOCKCODE,
         name: ret.NAME_ENG,
-        tradingDay: ret.date,
+        tradingDay: String(ret.date).slice(0, String(ret.date).indexOf("T")),
         shares: Number(this.state.inputStockShares),
         buyingPrice: Number(this.state.inputStockBuyingPrice),
         currentPrice: Number(ret.close),
