@@ -16,11 +16,12 @@ export default class StockSection extends React.Component {
     return (
       <div id="stock-wrapper">
         <div id="section-text">
-          2. Stock Portfolio <hr/>
+          2. Stock Portfolio &amp; Risk Indicator <hr/>
         </div>
         <div id="stock-content">
           <div className="stock-table">
             <StockTable user_id={user_id} stockList={stockList} updateParentStockList={this.props.updateParentStockList} />
+            Total invested amount: $ {}
           </div>
             <div className="col-md-6 stock-form divider-right-4px">
             <StockForm stockList={stockList} updateParentStockList={this.props.updateParentStockList} />
