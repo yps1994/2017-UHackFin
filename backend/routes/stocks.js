@@ -83,4 +83,22 @@ router.get('/raw_d/:stockID', function (req, res) {
     });
 });
 
+router.post('/post', function (req, res) {
+  var db = req.con;
+  const body = req.body;
+  body.forEach(function(element) {
+    var user_id = parseInt(element.user_id);
+    var stock_code = element.stock_code;
+    var stock_share = parseInt(element.stock_share);
+    db.query('REPLACE INTO user_data (ID, StockNo, SHARE) VALUES (?, ?, ?)', 
+      [user_id, stock_code, stock_share], function (err) {
+        if (err) {
+          console.log(err);
+          throw err;
+        }
+      });
+    res.json({'status': 'OK'});
+  });
+});
+
 module.exports = router;
