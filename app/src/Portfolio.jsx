@@ -27,20 +27,20 @@ export default class Portfolio extends React.Component {
     var grouppedStockCodeList = _(this.state.stockList).groupBy('code');
     var grouppedStockSharesList = _(grouppedStockCodeList).map(function(grouppedValue,key) {
       return {
-        user_id: this.state.user_id,
-        code: key,
-        totalShares: _(grouppedValue).reduce(function (m, x) { return m + x.shares; }, 0)
+        user_id: String(this.state.user_id),
+        stock_code: String(key),
+        stock_share: String(_(grouppedValue).reduce(function (m, x) { return m + x.shares; }, 0))
       };
     }, this);
 
     grouppedStockSharesList.forEach(function (item) {
-      /*axios.post('http://10.89.87.156:3000/stocks/post', item)
+      axios.post('http://143.89.19.10:3000/stocks/post', [item])
         .then(function (response) {
           console.log(response);
         })
         .catch(function (error) {
           console.log(error);
-        });*/
+        });
     });
   }
 
