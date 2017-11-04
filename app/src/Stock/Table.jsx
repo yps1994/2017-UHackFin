@@ -77,7 +77,8 @@ export default class StockTable extends React.Component {
 
       <BootstrapTable data={listStock} cellEdit={cellEditProp} selectRow={selectRowProp} options={options}
         deleteRow exportCSV pagination striped hover condensed>
-        <TableHeaderColumn isKey dataField='code' dataSort> Stock Code</TableHeaderColumn>
+        <TableHeaderColumn isKey={true} dataField='id' dataSort> ID </TableHeaderColumn>
+        <TableHeaderColumn dataField='code' dataSort editable={false}> Stock Code</TableHeaderColumn>
         <TableHeaderColumn dataField='name' dataSort editable={false}> Stock Name</TableHeaderColumn>
         <TableHeaderColumn dataField='tradingDay' dataSort editable={false}> Trading Day </TableHeaderColumn>
         <TableHeaderColumn dataField='shares' dataSort> Deposits (Shares) </TableHeaderColumn>

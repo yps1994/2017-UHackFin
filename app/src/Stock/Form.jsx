@@ -37,6 +37,7 @@ export default class StockForm extends React.Component {
       const ret = response.data.data[0];
 
       stockList.push({
+        id: stockList.length + 1,
         code: ret.STOCKCODE,
         name: ret.NAME_ENG,
         tradingDay: ret.date,

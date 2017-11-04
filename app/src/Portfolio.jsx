@@ -34,7 +34,6 @@ export default class Portfolio extends React.Component {
     }, this);
 
     grouppedStockSharesList.forEach(function (item) {
-      console.log(item);
       /*axios.post('http://10.89.87.156:3000/stocks/post', item)
         .then(function (response) {
           console.log(response);
