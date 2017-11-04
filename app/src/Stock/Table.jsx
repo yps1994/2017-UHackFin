@@ -3,15 +3,16 @@ import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 
 export default class StockTable extends React.Component {
 
-  updateChildStockList = (stockList, row, cellValue) => {
+  updateChildStockList = (stockList, row, cellName, cellValue) => {
     var index = stockList.findIndex(i => i.name === row.name);
-    stockList[index]['lots'] = cellValue;
+    stockList[index][cellName] = cellValue;
+    stockList[index]['earn'] = (stockList[index]['currentPrice'] - stockList[index]['buyingPrice']) * stockList[index]['shares'];
 
     return (stockList);
   }
 
   onAfterSaveCell = (row, cellName, cellValue) => {
-    this.props.updateParentStockList(this.updateChildStockList(this.props.stockList, row, cellValue));
+    this.props.updateParentStockList(this.updateChildStockList(this.props.stockList, row, cellName, cellValue));
   }
 
   onAfterDeleteRow = (key) => {
@@ -77,12 +78,12 @@ export default class StockTable extends React.Component {
       <BootstrapTable data={listStock} cellEdit={cellEditProp} selectRow={selectRowProp} options={options}
         deleteRow exportCSV pagination striped hover condensed>
         <TableHeaderColumn isKey dataField='code' dataSort> Stock Code</TableHeaderColumn>
-        <TableHeaderColumn dataField='name' dataSort> Stock Name</TableHeaderColumn>
-        <TableHeaderColumn dataField='tradingDay' dataSort> Trading Day </TableHeaderColumn>
+        <TableHeaderColumn dataField='name' dataSort editable={false}> Stock Name</TableHeaderColumn>
+        <TableHeaderColumn dataField='tradingDay' dataSort editable={false}> Trading Day </TableHeaderColumn>
         <TableHeaderColumn dataField='shares' dataSort> Deposits (Shares) </TableHeaderColumn>
         <TableHeaderColumn dataField='buyingPrice' dataSort editable={{validator: amountValidator}} dataFormat={this.moneyFormatter}> Buying Price</TableHeaderColumn>
         <TableHeaderColumn dataField='currentPrice' dataSort dataFormat={this.moneyFormatter}> Current Price </TableHeaderColumn>
-        <TableHeaderColumn dataField='earn' dataSort dataFormat={this.amountFormatter}> Earn/Loss </TableHeaderColumn>
+        <TableHeaderColumn dataField='earn' dataSort dataFormat={this.moneyFormatter} editable={false}> Earn/Loss </TableHeaderColumn>
       </BootstrapTable>
     );
   }
