@@ -1,7 +1,6 @@
 #header-background {
   background-color: #e61616;
   height:125px;
-  margin-bottom: 50px;
 }
 
 #header {
@@ -13,10 +12,43 @@
   font-family: Roboto Condensed, 'Helvetica', sans-serif;
 }
 
-.bankaccount-wrapper {
-  
+#section-text {
+  margin-top: 50px;
+  margin-left: 15%;
+  margin-right: 15%;
+  padding: 0;
+
+  font-weight: bold;
+  font-size: 200%;
+  font-family: Roboto Condensed, 'Helvetica', sans-serif;
 }
 
+hr {
+  margin: 2px;
+  border-color: #eeeeee;
+  border-width: 4px;
+}
+
+.divider-right-4px {
+  border-right: 4px solid #eeeeee;
+}
+
+.divider-left-4px {
+  border-left: 4px solid #eeeeee;
+}
+
+#bankaccount-content, #stock-content {
+  margin-top: 25px;
+  margin-left: 15%;
+  margin-right: 15%;
+  padding: 0;
+  font-family: 'Helvetica', sans-serif;
+}
+
+#bankaccount-wrapper, #stock-wrapper {
+  display: inline-block;
+  padding-bottom: 0px;
+}
 .bankaccount-table {
   min-height: 400px;
   max-height: 500px;
@@ -26,35 +58,30 @@
   min-height: 400px;
   max-height: 500px;
 }
+
+.stock-form {
+  max-height: 500px;
+  height: 425px;
+}
+
+.stock-table {
+  max-height: 500px;
+  padding-bottom: 150px;
+}
+
 .chart-empty-style {
   
   min-height: 400px;
   max-height: 400px;  
   padding: 150px 0;
-  background: rgb(249, 249, 249);
-  border: 16px solid grey;
+  background: #eeeeee;
+  border: 16px solid #9e9e9e;
   border-radius: 32px;
-  height: 350px;
+
 
   text-align: center;
 
   color: grey;
   font-size: 250%;
   font-family: Roboto, 'Helvetica', sans-serif;
-}
-
-#bankaccount-content {
-  margin-top: 25px;
-  margin-left: 15%;
-  margin-right: 15%;
-  padding: 0;
-  font-family: 'Helvetica', sans-serif;
-}
-
-.divider-right-4px {
-  border-right: 4px solid grey;
-}
-
-.divider-left-4px {
-  border-left: 4px solid grey;
 }

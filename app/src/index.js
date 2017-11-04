@@ -4,7 +4,7 @@ import registerServiceWorker from './registerServiceWorker';
 import './index.css';
 import '../node_modules/react-bootstrap-table/dist/react-bootstrap-table-all.min.css';
 
-import BankAccountSection from './BankAccountSection';
+import Portfolio from './Portfolio';
 
-ReactDOM.render(<BankAccountSection/>, document.getElementById('bankaccount-content'));
+ReactDOM.render(<Portfolio/>, document.getElementById('portfolio-wrapper'));
 registerServiceWorker();
