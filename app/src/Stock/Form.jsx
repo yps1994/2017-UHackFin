@@ -35,8 +35,7 @@ export default class StockForm extends React.Component {
     e.preventDefault(); //Prevent auto-refresh the webpage after submitting the form.
 
     if (this.getStockSharesValidation() !== 'success') { return; }
-    console.log((this.state.inputStockTradingDay).subtract(1, 'days').format('YYYY-MM-DD'));
-    console.log(this.state.inputStockTradingDay);
+
     axios.get("http://143.89.19.10:3000/stocks/raw_d/" + this.state.inputStockCode + "/?d1=" + (this.state.inputStockTradingDay).add(2, 'days').format('YYYY-MM-DD'))
     .then((response) => {
       const stockList = this.props.stockList;
