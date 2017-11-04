@@ -24,12 +24,6 @@ export default class StockTable extends React.Component {
 
       // If the index cannot be found (which supposed it won't happen)
       if (index !== -1) {
-        let customDbObjectToDelete = { 
-          user_id: this.props.user_id,
-          stock_code: stockList[index]['code'],
-          stock_share: stockList[index]['shares']
-        }
-
         stockList.splice(index, 1);
       }
     }
@@ -86,15 +80,17 @@ export default class StockTable extends React.Component {
 
       <BootstrapTable data={listStock} cellEdit={cellEditProp} selectRow={selectRowProp} options={options}
         deleteRow exportCSV pagination striped hover condensed>
-        <TableHeaderColumn isKey={true} dataField='id' dataSort> ID </TableHeaderColumn>
-        <TableHeaderColumn dataField='code' dataSort editable={false}> Stock Code</TableHeaderColumn>
+        <TableHeaderColumn isKey={true} dataField='id' width='60' dataSort> ID </TableHeaderColumn>
+        <TableHeaderColumn dataField='code' width='120' dataSort editable={false}> Stock Code</TableHeaderColumn>
         <TableHeaderColumn dataField='name' dataSort editable={false}> Stock Name</TableHeaderColumn>
         <TableHeaderColumn dataField='tradingDay' dataSort editable={false}> Trading Day </TableHeaderColumn>
         <TableHeaderColumn dataField='shares' dataSort> Deposits (Shares) </TableHeaderColumn>
         <TableHeaderColumn dataField='buyingPrice' dataSort editable={{validator: amountValidator}} dataFormat={this.moneyFormatter}> Buying Price</TableHeaderColumn>
         <TableHeaderColumn dataField='currentPrice' dataSort dataFormat={this.moneyFormatter}> Current Price </TableHeaderColumn>
         <TableHeaderColumn dataField='earn' dataSort dataFormat={this.moneyFormatter} editable={false}> Earn/Loss </TableHeaderColumn>
+        <TableHeaderColumn dataField='hotness' width='120' dataSort editable={false}> Popularity </TableHeaderColumn>
       </BootstrapTable>
+      
     );
   }
 }

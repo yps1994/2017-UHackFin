@@ -30,16 +30,26 @@ export default class StockForm extends React.Component {
 
   // Note we should use this.setState instead directly accessing the elements.
   // See http://jamestw.logdown.com/posts/258005-reactjs-state
+  getStockHotness = (stockCode) => {
+    return axios.get("http://143.89.19.10:3000/stocks/hot/" + stockCode);
+  }
+
+  getStockData = (stockCode, day) => {
+    return axios.get("http://143.89.19.10:3000/stocks/raw_d/" + this.state.inputStockCode + "/?d1=" + (this.state.inputStockTradingDay).add(2, 'days').format('YYYY-MM-DD'));
+  }
+
   addStock = (e) => {
 
     e.preventDefault(); //Prevent auto-refresh the webpage after submitting the form.
 
     if (this.getStockSharesValidation() !== 'success') { return; }
 
-    axios.get("http://143.89.19.10:3000/stocks/raw_d/" + this.state.inputStockCode + "/?d1=" + (this.state.inputStockTradingDay).add(2, 'days').format('YYYY-MM-DD'))
-    .then((response) => {
+    axios.all([this.getStockHotness(this.state.inputStockCode), this.getStockData(this.state.inputStockCode, this.state.inputStockTradingDay)])
+    .then(axios.spread( (hotness, response) => {
+
       const stockList = this.props.stockList;
       const ret = response.data.data[0];
+      const ret_hotness = hotness.data.data;
       var buyingPrice = this.state.inputStockBuyingPrice;
       
       if (isNaN(buyingPrice) || !isFinite(buyingPrice) || buyingPrice === '') {
@@ -55,13 +65,14 @@ export default class StockForm extends React.Component {
         buyingPrice: Number(buyingPrice),
         currentPrice: Number(ret.close),
         earn: (this.state.inputStockShares * (ret.close - this.state.inputStockBuyingPrice)).toFixed(2),
-        amount: (Number(ret.close) * Number(this.state.inputStockShares)).toFixed(2)
+        amount: (Number(ret.close) * Number(this.state.inputStockShares)).toFixed(2),
+        hotness: Number(ret_hotness.hot)
       });
 
       this.props.updateParentStockList(stockList);
 
       this.clearStockFormInput();
-    })
+    }))
     .catch((error) => {
       console.log(error);
     });
