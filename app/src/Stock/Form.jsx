@@ -41,10 +41,9 @@ export default class StockForm extends React.Component {
         name: ret.NAME_ENG,
         tradingDay: ret.date,
         shares: this.state.inputStockShares,
-        buyingPrice: this.state.inputStockBuyingPrice,
-        currentPrice: ret.close,
-        earn: (this.state.inputStockShares * (ret.close - this.state.inputStockBuyingPrice)).toFixed(2),
-        amount: parseFloat(this.state.inputStockCode).toFixed(2)
+        buyingPrice: Number(this.state.inputStockBuyingPrice),
+        currentPrice: Number(ret.close),
+        earn: (this.state.inputStockShares * (ret.close - this.state.inputStockBuyingPrice)).toFixed(2)
       });
 
       this.props.updateParentStockList(stockList);
