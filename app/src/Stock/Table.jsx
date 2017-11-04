@@ -40,6 +40,7 @@ export default class StockTable extends React.Component {
     var formattedVal = parseFloat(cell).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
     return `$ ${formattedVal}`;
   }
+
   // Rendering section
   render = () => {
     // Obtain stock data from parent component
@@ -80,15 +81,14 @@ export default class StockTable extends React.Component {
 
       <BootstrapTable data={listStock} cellEdit={cellEditProp} selectRow={selectRowProp} options={options}
         deleteRow exportCSV pagination striped hover condensed>
-        <TableHeaderColumn isKey={true} dataField='id' width='60' dataSort> ID </TableHeaderColumn>
+        <TableHeaderColumn isKey={true} dataField='id' width='50' dataSort> ID </TableHeaderColumn>
         <TableHeaderColumn dataField='code' width='120' dataSort editable={false}> Stock Code</TableHeaderColumn>
-        <TableHeaderColumn dataField='name' dataSort editable={false}> Stock Name</TableHeaderColumn>
-        <TableHeaderColumn dataField='tradingDay' dataSort editable={false}> Trading Day </TableHeaderColumn>
-        <TableHeaderColumn dataField='shares' dataSort> Deposits (Shares) </TableHeaderColumn>
-        <TableHeaderColumn dataField='buyingPrice' dataSort editable={{validator: amountValidator}} dataFormat={this.moneyFormatter}> Buying Price</TableHeaderColumn>
-        <TableHeaderColumn dataField='currentPrice' dataSort dataFormat={this.moneyFormatter}> Current Price </TableHeaderColumn>
-        <TableHeaderColumn dataField='earn' dataSort dataFormat={this.moneyFormatter} editable={false}> Earn/Loss </TableHeaderColumn>
-        <TableHeaderColumn dataField='hotness' width='120' dataSort editable={false}> Popularity </TableHeaderColumn>
+        <TableHeaderColumn dataField='name' width='160' dataSort editable={false}> Stock Name</TableHeaderColumn>
+        <TableHeaderColumn dataField='tradingDay' width='120' dataSort editable={false}> Trading Day </TableHeaderColumn>
+        <TableHeaderColumn dataField='shares' width='100' dataSort> Shares </TableHeaderColumn>
+        <TableHeaderColumn dataField='buyingPrice' width='130' dataSort editable={{validator: amountValidator}} dataFormat={this.moneyFormatter}> Buying Price</TableHeaderColumn>
+        <TableHeaderColumn dataField='currentPrice' width='130' dataSort dataFormat={this.moneyFormatter}> Current Price </TableHeaderColumn>
+        <TableHeaderColumn dataField='earn' width='140'dataSort dataFormat={this.moneyFormatter} editable={false}> Changes </TableHeaderColumn>
       </BootstrapTable>
       
     );

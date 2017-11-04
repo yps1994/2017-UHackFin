@@ -46,7 +46,7 @@ hr {
   border-left: 4px solid #eeeeee;
 }
 
-#bankaccount-content, #stock-content {
+#bankaccount-content, #stock-content, #summary-content {
   margin-top: 25px;
   margin-left: 15%;
   margin-right: 15%;
@@ -54,10 +54,11 @@ hr {
   font-family: 'Helvetica', sans-serif;
 }
 
-#bankaccount-wrapper, #stock-wrapper {
+#bankaccount-wrapper, #stock-wrapper, #summary-wrapper {
   display: inline-block;
   padding-bottom: 0px;
 }
+
 .bankaccount-table {
   min-height: 400px;
   max-height: 500px;
@@ -93,4 +94,16 @@ hr {
   color: grey;
   font-size: 250%;
   font-family: Roboto, 'Helvetica', sans-serif;
+}
+
+.table-hotness-hot {
+  background: orange;
+}
+
+.table-hotness-normal {
+  background: yellow;
+}
+
+.table-hotness-weak {
+  background: green;
 }
