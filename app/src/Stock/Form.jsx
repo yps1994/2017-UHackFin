@@ -1,6 +1,11 @@
 import React from 'react';
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
 import {Form, FormGroup, ControlLabel, FormControl, HelpBlock, Button} from 'react-bootstrap';
 import axios from 'axios';
+
+import '../../node_modules/react-datepicker/dist/datepicker.css';
+
 
 export default class StockForm extends React.Component {
   constructor (props) {
@@ -9,7 +14,7 @@ export default class StockForm extends React.Component {
     this.state = {
       inputStockCode: '',
       inputStockShares: '',
-      inputStockTradingDay: '',
+      inputStockTradingDay: moment(),
       inputStockBuyingPrice: '',
     };
   }
@@ -18,7 +23,7 @@ export default class StockForm extends React.Component {
     this.setState({
       inputStockCode: '',
       inputStockShares: '',
-      inputStockTradingDay: '',
+      inputStockTradingDay: moment(),
       inputStockBuyingPrice: ''
     });
   };
@@ -30,11 +35,17 @@ export default class StockForm extends React.Component {
     e.preventDefault(); //Prevent auto-refresh the webpage after submitting the form.
 
     if (this.getStockSharesValidation() !== 'success') { return; }
-
-    axios.get("http://143.89.19.10:3000/stocks/raw_d/" + this.state.inputStockCode + "/?d1=" + this.state.inputStockTradingDay)
+    console.log((this.state.inputStockTradingDay).subtract(1, 'days').format('YYYY-MM-DD'));
+    console.log(this.state.inputStockTradingDay);
+    axios.get("http://143.89.19.10:3000/stocks/raw_d/" + this.state.inputStockCode + "/?d1=" + (this.state.inputStockTradingDay).add(2, 'days').format('YYYY-MM-DD'))
     .then((response) => {
       const stockList = this.props.stockList;
       const ret = response.data.data[0];
+      var buyingPrice = this.state.inputStockBuyingPrice;
+      
+      if (isNaN(buyingPrice) || !isFinite(buyingPrice) || buyingPrice === '') {
+        buyingPrice = (parseFloat(ret.low) + parseFloat(ret.high)) / 2;
+      }
 
       stockList.push({
         id: stockList.length + 1,
@@ -42,7 +53,7 @@ export default class StockForm extends React.Component {
         name: ret.NAME_ENG,
         tradingDay: String(ret.date).slice(0, String(ret.date).indexOf("T")),
         shares: Number(this.state.inputStockShares),
-        buyingPrice: Number(this.state.inputStockBuyingPrice),
+        buyingPrice: Number(buyingPrice),
         currentPrice: Number(ret.close),
         earn: (this.state.inputStockShares * (ret.close - this.state.inputStockBuyingPrice)).toFixed(2),
         amount: (Number(ret.close) * Number(this.state.inputStockShares)).toFixed(2)
@@ -78,7 +89,7 @@ export default class StockForm extends React.Component {
 
   updateInputStockTradingDay = (tradingDay) => {
     this.setState({
-      inputStockTradingDay: tradingDay.target.value
+      inputStockTradingDay: tradingDay
     });
   }
 
@@ -123,28 +134,28 @@ export default class StockForm extends React.Component {
 
           <FormGroup controlId="formStockTradingDay">
             <ControlLabel>Trading Day</ControlLabel>
-            <FormControl
-              type="text"
+            <DatePicker
+              dateFormat="YYYY-MM-DD"
               className="stock-trading-day-textbox"
               placeholder="Trading Day"
-              value={this.state.inputStockTradingDay}
+              selected={this.state.inputStockTradingDay}
               onChange={amount => this.updateInputStockTradingDay(amount)}
             />
             <FormControl.Feedback/>
-            <HelpBlock>The trading day of the stock must be valid. </HelpBlock>
+            <HelpBlock>The trading day of the stock must be in YYYY-MM-DD format. </HelpBlock>
           </FormGroup>
 
           <FormGroup controlId="formStockBuyingPrice">
-            <ControlLabel>Buying Price</ControlLabel>
+            <ControlLabel>Buying Price (Optional)</ControlLabel>
             <FormControl
               type="text"
               className="stock-buying-price-textbox"
-              placeholder="Buying Price"
+              placeholder="Buying Price (Optional)"
               value={this.state.inputStockBuyingPrice}
               onChange={price => this.updateInputStockBuyingPrice(price)}
             />
             <FormControl.Feedback/>
-            <HelpBlock>The buying price of the stock. </HelpBlock>
+            <HelpBlock>The buying price of the stock. If empty, the average between the min and max price during the transaction day will be used.</HelpBlock>
           </FormGroup>
 
           <Button className="addButton" type="submit" bsStyle="primary" >Add stock</Button>
