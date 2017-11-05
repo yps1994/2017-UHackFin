@@ -54,7 +54,7 @@ export default class StockForm extends React.Component {
       const stockList = this.props.stockList;
       const ret = response.data.data[0];
       const ret_hotness = hotness.data.data;
-      const ret_risk = risk.data.data;
+      const ret_risk = risk.data.stat;
 
       var buyingPrice = this.state.inputStockBuyingPrice;
       
@@ -72,7 +72,12 @@ export default class StockForm extends React.Component {
         currentPrice: Number(ret.close),
         earn: (this.state.inputStockShares * (ret.close - this.state.inputStockBuyingPrice)).toFixed(2),
         amount: (Number(ret.close) * Number(this.state.inputStockShares)).toFixed(2),
-        hotness: Number(ret_hotness.hot)
+        hotness: Number(ret_hotness.hot),
+        max_drawdown: Number(ret_risk[1].toFixed(4)),
+        beta: Number(ret_risk[3].toFixed(4)),
+        variance: Number(ret_risk[5].toFixed(4)),
+        average_per: Number(ret_risk[7].toFixed(4)),
+        mean_ratio: Number(ret_risk[9].toFixed(4))
       });
 
       this.props.updateParentStockList(stockList);

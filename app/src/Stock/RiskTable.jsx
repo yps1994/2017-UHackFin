@@ -3,10 +3,10 @@ import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 
 export default class StockRiskTable extends React.Component {
 
-  categorizeHotness(fieldValue) {
+  categorizeRisk(fieldValue) {
 
-    if (fieldValue > 0.05 && fieldValue <= 0.10) { return 'table-hotness-normal';}
-    else if (fieldValue > 0.10) { return 'table-hotness-hot';}
+    if (fieldValue > 10 && fieldValue <= 20) { return 'table-hotness-normal';}
+    else if (fieldValue > 20) { return 'table-hotness-hot';}
 
     return 'table-hotness-weak';
   }
@@ -14,18 +14,6 @@ export default class StockRiskTable extends React.Component {
   render = () => {
     // Obtain stock data from parent component
     const listStock = this.props.stockList;
-
-    // Options for cell edit
-    const cellEditProp = {
-      mode: 'click',
-      blurToSave: true,
-      afterSaveCell: this.onAfterSaveCell
-    };
-
-    // Options for mode on selecting rows
-    const selectRowProp = {
-      mode: 'checkbox'
-    };
 
     // Hooking the operation of dropping rows
     const options = {
@@ -52,11 +40,11 @@ export default class StockRiskTable extends React.Component {
         <TableHeaderColumn isKey={true} dataField='id' dataSort> ID </TableHeaderColumn>
         <TableHeaderColumn dataField='code' dataSort> Stock Code</TableHeaderColumn>
         <TableHeaderColumn dataField='name' dataSort> Stock Name</TableHeaderColumn>
-        <TableHeaderColumn dataField='max_drawdown' dataSort> Max Drawdown </TableHeaderColumn>
+        <TableHeaderColumn dataField='max_drawdown' columnClassName={this.categorizeRisk} dataSort>  Max Drawdown (%) </TableHeaderColumn>
         <TableHeaderColumn dataField='beta' dataSort> Beta </TableHeaderColumn>
-        <TableHeaderColumn dataField='average_per' dataSort> Average Per</TableHeaderColumn>
-        <TableHeaderColumn dataField='mean_ratio' dataSort> Mean Ratio </TableHeaderColumn>
-        <TableHeaderColumn dataField='hotness' dataSort columnClassName={this.categorizeHotness}> Popularity </TableHeaderColumn>
+        <TableHeaderColumn dataField='average_per' dataSort> Popularity (%) </TableHeaderColumn>
+        <TableHeaderColumn dataField='mean_ratio' dataSort> Mean Ratio (%) </TableHeaderColumn>
+        <TableHeaderColumn dataField='hotness' dataSort > Hotness </TableHeaderColumn>
       </BootstrapTable>
       
     );
