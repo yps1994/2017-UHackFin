@@ -1,15 +1,8 @@
 import React from 'react';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 
-export default class StockRiskTable extends React.Component {
+export default class StockSimilarityTable extends React.Component {
 
-  categorizeRisk(fieldValue) {
-
-    if (fieldValue > 10 && fieldValue <= 20) { return 'table-hotness-normal';}
-    else if (fieldValue > 20) { return 'table-hotness-hot';}
-
-    return 'table-hotness-weak';
-  }
   // Rendering section
   render = () => {
     // Obtain stock data from parent component
@@ -37,11 +30,11 @@ export default class StockRiskTable extends React.Component {
     return (
 
       <BootstrapTable data={listStock} options={options} pagination striped hover condensed>
-        <TableHeaderColumn isKey={true} dataField='id' dataSort> ID </TableHeaderColumn>
-        <TableHeaderColumn dataField='code' dataSort> Stock Code</TableHeaderColumn>
-        <TableHeaderColumn dataField='name' dataSort> Stock Name</TableHeaderColumn>
-        <TableHeaderColumn dataField='max_drawdown' columnClassName={this.categorizeRisk} dataSort>  Max Drawdown (%) </TableHeaderColumn>
-        <TableHeaderColumn dataField='beta' dataSort> Beta </TableHeaderColumn>
+        <TableHeaderColumn isKey={true} dataField='id' width='50' dataSort> ID </TableHeaderColumn>
+        <TableHeaderColumn dataField='name' width='200' dataSort> Stock Name</TableHeaderColumn>
+        <TableHeaderColumn dataField='average_per' dataSort> Percentage of winner's portfolio holding </TableHeaderColumn>
+        <TableHeaderColumn dataField='mean_ratio' dataSort> Proportion of winner's portfolio holding </TableHeaderColumn>
+        <TableHeaderColumn dataField='hotness' dataSort > Proportion of all portfolios' holding </TableHeaderColumn>
       </BootstrapTable>
       
     );

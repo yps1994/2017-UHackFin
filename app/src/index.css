@@ -46,7 +46,7 @@ hr {
   border-left: 4px solid #eeeeee;
 }
 
-#bankaccount-content, #stock-content, #summary-content {
+#bankaccount-content, #stock-content, #similarity-content, #summary-content {
   margin-top: 25px;
   margin-left: 15%;
   margin-right: 15%;
@@ -54,7 +54,7 @@ hr {
   font-family: 'Helvetica', sans-serif;
 }
 
-#bankaccount-wrapper, #stock-wrapper, #summary-wrapper {
+#bankaccount-wrapper, #stock-wrapper, #similarity-wrapper, #summary-wrapper {
   padding-bottom: 0px;
 }
 

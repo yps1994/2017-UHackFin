@@ -5,6 +5,7 @@ import {_} from 'underscore';
 
 import BankAccountSection from './BankAccountSection';
 import StockSection from './StockSection';
+import StockSimilaritySection from './SimilaritySection'; 
 import SummarySection from './SummarySection';
 
 // Peter Yeung: ReactJS used huge amount of syntax similar with lambda expression
@@ -154,6 +155,7 @@ export default class Portfolio extends React.Component {
       <div>
           <BankAccountSection user_id={user_id} accountList={accountList} updateParentAccountList={this.updateBankAccountList} />
           <StockSection user_id={user_id} stockList={stockList} updateParentStockList={this.updateStockList} />
+          <StockSimilaritySection user_id={user_id} stockList={stockList} />
           <SummarySection user_id={user_id} historyPortfolioAmount={portfolio_amount} historyPortfolioDate={portfolio_date} />
       </div>
     );
