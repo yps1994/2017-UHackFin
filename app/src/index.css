@@ -55,28 +55,33 @@ hr {
 }
 
 #bankaccount-wrapper, #stock-wrapper, #summary-wrapper {
-  display: inline-block;
   padding-bottom: 0px;
 }
 
+.display-summary-box {
+  margin-top: 20px;
+  margin-left: 50%;
+  margin-bottom: 20px;
+}
+
 .bankaccount-table {
-  min-height: 400px;
-  max-height: 500px;
+  min-height: 500px;
+  max-height: 600px;
 }
 
 .bankaccount-chart {
-  min-height: 400px;
-  max-height: 500px;
+  min-height: 500px;
+  max-height: 600px;
 }
 
 .stock-form {
-  max-height: 500px;
-  height: 425px;
+  max-height: 600px;
+  height: 500px;
 }
 
 .stock-table {
-  max-height: 500px;
-  padding-bottom: 150px;
+  max-height: 1200px;
+  padding-bottom: 100px;
 }
 
 .chart-empty-style {
@@ -97,13 +102,16 @@ hr {
 }
 
 .table-hotness-hot {
-  background: orange;
+  font-weight: bold;
+  color: red;
 }
 
 .table-hotness-normal {
-  background: yellow;
+  font-weight: bold;
+  color: orange;
 }
 
 .table-hotness-weak {
-  background: green;
+  font-weight: bold;
+  color: green;
 }
