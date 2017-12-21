@@ -12,6 +12,15 @@
   font-family: Roboto Condensed, 'Helvetica', sans-serif;
 }
 
+#portfolio-wrapper {
+  margin-bottom: 150px
+}
+
+#footer-background {
+  background-color: #e61616;
+  height: 125px;
+}
+
 #section-text {
   margin-top: 50px;
   margin-left: 15%;
@@ -37,7 +46,7 @@ hr {
   border-left: 4px solid #eeeeee;
 }
 
-#bankaccount-content, #stock-content {
+#bankaccount-content, #stock-content, #similarity-content, #summary-content {
   margin-top: 25px;
   margin-left: 15%;
   margin-right: 15%;
@@ -45,28 +54,34 @@ hr {
   font-family: 'Helvetica', sans-serif;
 }
 
-#bankaccount-wrapper, #stock-wrapper {
-  display: inline-block;
+#bankaccount-wrapper, #stock-wrapper, #similarity-wrapper, #summary-wrapper {
   padding-bottom: 0px;
 }
+
+.display-summary-box {
+  margin-top: 20px;
+  margin-left: 50%;
+  margin-bottom: 20px;
+}
+
 .bankaccount-table {
-  min-height: 400px;
-  max-height: 500px;
+  min-height: 500px;
+  max-height: 600px;
 }
 
 .bankaccount-chart {
-  min-height: 400px;
-  max-height: 500px;
+  min-height: 500px;
+  max-height: 600px;
 }
 
 .stock-form {
-  max-height: 500px;
-  height: 425px;
+  max-height: 600px;
+  height: 500px;
 }
 
 .stock-table {
-  max-height: 500px;
-  padding-bottom: 150px;
+  max-height: 1200px;
+  padding-bottom: 100px;
 }
 
 .chart-empty-style {
@@ -84,4 +99,19 @@ hr {
   color: grey;
   font-size: 250%;
   font-family: Roboto, 'Helvetica', sans-serif;
+}
+
+.table-hotness-hot {
+  font-weight: bold;
+  color: red;
+}
+
+.table-hotness-normal {
+  font-weight: bold;
+  color: orange;
+}
+
+.table-hotness-weak {
+  font-weight: bold;
+  color: green;
 }

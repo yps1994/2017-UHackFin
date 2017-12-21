@@ -30,16 +30,32 @@ export default class StockForm extends React.Component {
 
   // Note we should use this.setState instead directly accessing the elements.
   // See http://jamestw.logdown.com/posts/258005-reactjs-state
+  getStockHotness = (stockCode) => {
+    return axios.get("http://143.89.19.10:3000/stocks/hot/" + stockCode);
+  }
+
+  getStockData = (stockCode, day) => {
+    return axios.get("http://143.89.19.10:3000/stocks/raw_d/" + this.state.inputStockCode + "/?d1=" + (this.state.inputStockTradingDay).format('YYYY-MM-DD'));
+  }
+
+  getRiskIndicator = (stockCode) => {
+    return axios.get("http://143.89.199.165:27960/stat/" + stockCode);
+  }
+
   addStock = (e) => {
 
     e.preventDefault(); //Prevent auto-refresh the webpage after submitting the form.
 
     if (this.getStockSharesValidation() !== 'success') { return; }
 
-    axios.get("http://143.89.19.10:3000/stocks/raw_d/" + this.state.inputStockCode + "/?d1=" + (this.state.inputStockTradingDay).add(2, 'days').format('YYYY-MM-DD'))
-    .then((response) => {
+    axios.all([this.getStockHotness(this.state.inputStockCode), this.getStockData(this.state.inputStockCode, this.state.inputStockTradingDay), this.getRiskIndicator(this.state.inputStockCode)])
+    .then(axios.spread( (hotness, response, risk) => {
+
       const stockList = this.props.stockList;
       const ret = response.data.data[0];
+      const ret_hotness = hotness.data.data;
+      const ret_risk = risk.data.stat;
+
       var buyingPrice = this.state.inputStockBuyingPrice;
       
       if (isNaN(buyingPrice) || !isFinite(buyingPrice) || buyingPrice === '') {
@@ -50,18 +66,24 @@ export default class StockForm extends React.Component {
         id: stockList.length + 1,
         code: ret.STOCKCODE,
         name: ret.NAME_ENG,
-        tradingDay: String(ret.date).slice(0, String(ret.date).indexOf("T")),
+        tradingDay: this.state.inputStockTradingDay.format("YYYY-MM-DD"),
         shares: Number(this.state.inputStockShares),
         buyingPrice: Number(buyingPrice),
         currentPrice: Number(ret.close),
         earn: (this.state.inputStockShares * (ret.close - this.state.inputStockBuyingPrice)).toFixed(2),
-        amount: (Number(ret.close) * Number(this.state.inputStockShares)).toFixed(2)
+        amount: (Number(ret.close) * Number(this.state.inputStockShares)).toFixed(2),
+        hotness: Number(ret_hotness.hot),
+        max_drawdown: Number(ret_risk[1].toFixed(4)),
+        beta: Number(ret_risk[3].toFixed(4)),
+        variance: Number(ret_risk[5].toFixed(4)),
+        average_per: Number(ret_risk[7].toFixed(4)),
+        mean_ratio: Number(ret_risk[9].toFixed(4))
       });
 
       this.props.updateParentStockList(stockList);
 
       this.clearStockFormInput();
-    })
+    }))
     .catch((error) => {
       console.log(error);
     });
