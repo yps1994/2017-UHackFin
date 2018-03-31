@@ -1,22 +1,96 @@
 import React from 'react';
-import { Doughnut } from 'react-chartjs-2';
-import { range } from 'underscore';
+import { ResponsiveContainer, PieChart, Pie, Sector, Cell } from 'recharts';
 
-const options = {
-  title: {
-    display: true,
-    fontSize: 18,
-    text: 'Composition of your portfolio'
-  }
+const COLORS = ['#00BAF2', '#00BAF2', '#00a7d9', /* light blue */
+'#E80C60', '#E80C60', '#d00a56', /* light pink */
+'#9B26AF', '#9B26AF', '#8b229d', /* light purple */
+'#E2D51A', '#E2D51A', '#E2D51A', /* med yellow */
+'#FB301E', '#FB301E', '#e12b1b', /* med red */
+'#00AE4D', '#00AE4D', '#00AE4D']; /* med green */
+
+const renderActiveShape = (props) => {
+  const RADIAN = Math.PI / 180;
+  const { cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle, fill, payload, name, value } = props;
+  const sin = Math.sin(-RADIAN * midAngle);
+  const cos = Math.cos(-RADIAN * midAngle);
+  const sx = cx + (outerRadius + 10) * cos;
+  const sy = cy + (outerRadius + 10) * sin;
+  const mx = cx + (outerRadius + 30) * cos;
+  const my = cy + (outerRadius + 30) * sin;
+  const ex = mx + (cos >= 0 ? 1 : -1) * 22;
+  const ey = my;
+  const textAnchor = cos >= 0 ? 'start' : 'end';
+
+  return (
+    <g>
+      <text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill}>{payload.name}</text>
+      <Sector
+        cx={cx}
+        cy={cy}
+        innerRadius={innerRadius}
+        outerRadius={outerRadius}
+        startAngle={startAngle}
+        endAngle={endAngle}
+        fill={fill}
+      />
+      <Sector
+        cx={cx}
+        cy={cy}
+        startAngle={startAngle}
+        endAngle={endAngle}
+        innerRadius={outerRadius + 6}
+        outerRadius={outerRadius + 10}
+        fill={fill}
+      />
+      <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={fill} fill="none"/>
+      <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none"/>
+      <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} textAnchor={textAnchor} fill="#333">{`Name: ${name}`}</text>
+      <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} dy={18} textAnchor={textAnchor} fill="#999">
+        {`(Value ${value})`}
+      </text>
+    </g>
+  );
 };
 
 export default class Chart extends React.Component {
-  render = () => {
-    const chartData = convertToChartData(this.props.data);
+  constructor (props) {
+    super(props);
 
-    if (chartData.labels.length > 0) {
+    this.state = {
+        activeIndex: 0,
+    };
+  }
+
+  onPieEnter = (data, index) => {
+    this.setState({
+      activeIndex: index,
+    });
+  }
+
+  render = () => {
+
+    const chartData = convertToPieChartAmountInput(this.props.data)
+
+    if (chartData.length > 0) {
       return (
-        <Doughnut data={chartData} options={options} />
+        <ResponsiveContainer>
+          <PieChart>
+            width = {1200}
+            <Pie
+            activeIndex={this.state.activeIndex}
+            activeShape={renderActiveShape} 
+              data = {chartData}
+              dataKey = "value"
+              innerRadius = "60%"
+              isAnimationActive = {true}
+              animationEasing = "ease"
+              onMouseEnter={this.onPieEnter} >
+              {
+                chartData.map((entry, index) => <Cell key={index} fill={COLORS[(index * 3) % 17]}/>)
+              }
+              </Pie>
+          </PieChart>
+        </ResponsiveContainer>
       );
     } else {
       return (
@@ -25,32 +99,8 @@ export default class Chart extends React.Component {
     }
   }
 }
-
-function convertToChartData (data) {
-  return {
-    labels: data.map(function (val) {
-      return val.name;
-    }),
-
-    datasets: [{
-      data: data.map(function (val) {
-        return val.amount;
-      }),
-      backgroundColor: range(data.length).map(function (i) {
-        return getColor(i * 3 % 17);
-      })
-    }]
-  };
-}
-
-// Predefined color because chartJS does not provide any color scheme
-function getColor (index) {
-  var color = ['#00BAF2', '#00BAF2', '#00a7d9', /* light blue */
-    '#E80C60', '#E80C60', '#d00a56', /* light pink */
-    '#9B26AF', '#9B26AF', '#8b229d', /* light purple */
-    '#E2D51A', '#E2D51A', '#E2D51A', /* med yellow */
-    '#FB301E', '#FB301E', '#e12b1b', /* med red */
-    '#00AE4D', '#00AE4D', '#00AE4D']; /* med green */
-
-  return color[index];
+function convertToPieChartAmountInput (data) {
+  var result = [];
+  data.forEach((data, i) => result.push({name: data.name, value: Number(data.amount)}));
+  return result;
 }
