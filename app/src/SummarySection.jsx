@@ -12,7 +12,7 @@ export default class SummarySection extends React.Component {
 
     const portfolio_date = this.props.historyPortfolioDate;
     const portfolio_amount = this.props.historyPortfolioAmount;
-
+  
     return (
 
       <div id="summary-wrapper">
@@ -24,8 +24,13 @@ export default class SummarySection extends React.Component {
         <div id="summary-content">
           <div id="summary-chart">
             <ResponsiveContainer>
-              <AreaChart data={convertToChartData(portfolio_date, portfolio_amount) }>
-                <Area type="monotone" dataKey="Amount" />
+              <AreaChart data={convertToTimeSeriesData(portfolio_date, portfolio_amount) }>
+                <Area
+                  type = "monotone"
+                  dataKey = "Amount"
+                  stroke = "black"
+                  fill = "grey"
+                />
                 <XAxis
                   name = "Date"
                   domain = {['dataMin', 'dataMax']}
@@ -57,7 +62,7 @@ export default class SummarySection extends React.Component {
 const toMoneyFormat = (amount) => { return "$"+parseFloat(amount).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'); }
 const convertUnixTimeToDate = (unixTime) => { return (moment(unixTime)).format('YYYY-MM-DD'); }
 
-function convertToChartData (date, amount) {
+function convertToTimeSeriesData (date, amount) {
   var result = [];
   date.forEach((date, i) => result.push({UnixTime: Date.parse(date), Amount: amount[i]}));
   return result;
