@@ -1,50 +1,47 @@
 import React from 'react';
 
-import { Line } from 'react-chartjs-2';
+import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip } from 'recharts';
 
 // Peter Yeung: ReactJS used huge amount of syntax similar with lambda expression
-
-const options = {
-  title: {
-    display: true,
-    fontSize: 18,
-    text: 'Trend of your consolidated capital'
-  },
-  elements: {
-    line: {
-      tension: 0,
-    }
-  }
-};
-
 
 export default class SummarySection extends React.Component {
 
   // Rendering section
   render = () => {
     // get data from state, not from props
-    const portfolio_amount = this.props.historyPortfolioAmount;
-    const portfolio_date = this.props.historyPortfolioDate;
 
+    const portfolio_date = this.props.historyPortfolioDate;
+    const portfolio_amount = this.props.historyPortfolioAmount;
+
+  
     return (
+
       <div id="summary-wrapper">
+
         <div id="section-text">
           3. Summary <hr/>
         </div>
+
         <div id="summary-content">
-          <Line data={convertToChartData(portfolio_amount, portfolio_date)} height={80} options={options} />
+          <ResponsiveContainer minHeight={300}>
+            <AreaChart data={convertToChartData(portfolio_date, portfolio_amount) }>
+              <Area type="monotone" dataKey="Amount" />
+              <XAxis dataKey="Date" />
+              <YAxis domain={['auto', 'auto']} />
+              <Tooltip/>
+            </AreaChart>
+          </ResponsiveContainer>
         </div>
+
       </div>
     );
   }
 }
 
-function convertToChartData (amount, date) {
-  return {
-    labels: date,
-    datasets: [{
-      label: "Total capital",
-      data: amount
-    }]
-  };
+function convertToChartData (date, amount) {
+  var result = [];
+
+  date.forEach((date, i) => result.push({Date: date, Amount: amount[i]}));
+
+  return result;
 }
