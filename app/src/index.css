@@ -46,6 +46,9 @@ hr {
   border-left: 4px solid #eeeeee;
 }
 
+#summary-chart {
+  height: 300px;
+}
 #bankaccount-content, #stock-content, #similarity-content, #summary-content {
   margin-top: 25px;
   margin-left: 15%;
