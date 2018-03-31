@@ -19,7 +19,7 @@ export default class BankAccountSection extends React.Component {
         <div id="section-text">
           1. Bank Account <hr/>
         </div>
-        <div id="bankaccount-content">
+        <div id="bankaccount-content" className="row">
           <div className="col-md-6 bankaccount-table divider-right-4px">
             <BankAccountTable accountList={accountList} updateParentAccountList={this.props.updateParentAccountList} />
             <BankAccountForm accountList={accountList} updateParentAccountList={this.props.updateParentAccountList} />

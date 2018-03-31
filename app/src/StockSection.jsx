@@ -29,22 +29,27 @@ export default class StockSection extends React.Component {
           2. Stock Portfolio &amp; Risk Indicator <hr/>
         </div>
         <div id="stock-content">
-          <div className="stock-table">
 
+          <div className="stock-table">
             <StockTable user_id={user_id} stockList={stockList} updateParentStockList={this.props.updateParentStockList} />
             <div className="well well-sm pull-right text-right display-summary-box"> <h3>
                 Total invested: $ {this.obtainTotalInvestedAmount(stockList)
                   .toFixed(2)
                   .replace(/(\d)(?=(\d{3})+\.)/g, '$1,')}
             </h3> </div>
+
             <StockRiskTable user_id={user_id} stockList={stockList} />
           </div>
-            <div className="col-md-6 stock-form divider-right-4px">
-            <StockForm stockList={stockList} updateParentStockList={this.props.updateParentStockList} />
+
+          <div className="row">
+              <div className="col-md-6 stock-form divider-right-4px">
+              <StockForm stockList={stockList} updateParentStockList={this.props.updateParentStockList} />
+            </div>
+            <div className="col-md-6 bankaccount-chart">
+              <Chart data={stockList} />
+            </div>
           </div>
-          <div className="col-md-6 bankaccount-chart">
-            <Chart data={stockList} />
-          </div>
+
         </div>
       </div>
     );
