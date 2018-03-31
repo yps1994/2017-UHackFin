@@ -1,5 +1,4 @@
 import React from 'react';
-import { range } from 'underscore';
 import { ResponsiveContainer, PieChart, Pie, Sector, Cell } from 'recharts';
 
 const COLORS = ['#00BAF2', '#00BAF2', '#00a7d9', /* light blue */
