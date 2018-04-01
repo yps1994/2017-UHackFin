@@ -46,7 +46,7 @@ export default class StockSection extends React.Component {
               <div className="col-md-6 stock-form divider-right-4px">
               <StockForm stockList={stockList} updateParentStockList={this.props.updateParentStockList} />
             </div>
-            <div className="col-md-6 bankaccount-chart">
+            <div className="col-md-6 stock-chart">
               <DoughnutChart data={stockList} />
             </div>
           </div>
