@@ -25,7 +25,7 @@ export default class BankAccountSection extends React.Component {
             <BankAccountForm accountList={accountList} updateParentAccountList={this.props.updateParentAccountList} />
           </div>
           <div className="col-md-6 bankaccount-chart">
-            <DoughnutChart data={accountList} />
+            <DoughnutChart data={accountList} label="name" value="amount" displayLabelAttribute="name"/>
           </div>
         </div>
       </div>

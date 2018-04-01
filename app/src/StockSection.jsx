@@ -47,7 +47,7 @@ export default class StockSection extends React.Component {
               <StockForm stockList={stockList} updateParentStockList={this.props.updateParentStockList} />
             </div>
             <div className="col-md-6 stock-chart">
-              <DoughnutChart data={stockList} />
+              <DoughnutChart data={stockList} label="code" value="amount" displayLabelAttribute="code" />
             </div>
           </div>
 

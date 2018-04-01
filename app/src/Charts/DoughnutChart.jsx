@@ -8,11 +8,10 @@ const COLORS = ['#00BAF2', '#00BAF2', '#00a7d9', /* light blue */
 '#FB301E', '#FB301E', '#e12b1b', /* med red */
 '#00AE4D', '#00AE4D', '#00AE4D']; /* med green */
 
-{/* From recharts example */}
-
+/* From recharts example */
 const renderActiveShape = (props) => {
   const RADIAN = Math.PI / 180;
-  const { cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle, fill, payload, name, value } = props;
+  const { cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle, fill, payload, value, nameKey, displayLabelAttribute } = props;
   const sin = Math.sin(-RADIAN * midAngle);
   const cos = Math.cos(-RADIAN * midAngle);
   const sx = cx + (outerRadius + 10) * cos;
@@ -25,7 +24,7 @@ const renderActiveShape = (props) => {
 
   return (
     <g>
-      <text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill}>{payload.name}</text>
+      <text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill}>{payload[nameKey]}</text>
       <Sector
         cx={cx}
         cy={cy}
@@ -46,7 +45,7 @@ const renderActiveShape = (props) => {
       />
       <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={fill} fill="none"/>
       <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none"/>
-      <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} textAnchor={textAnchor} fill="#333">{`${name}`}</text>
+      <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} textAnchor={textAnchor} fill="#333">{`${payload[displayLabelAttribute]}`}</text>
       <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} dy={18} textAnchor={textAnchor} fill="#999">
         {`${value}`}
       </text>
@@ -71,26 +70,31 @@ export default class DoughnutChart extends React.Component {
 
   render = () => {
 
-    const chartData = this.props.data;
 
-    console.log(chartData);
-    
+
+    const chartData = this.props.data;
+    const label = this.props.label;
+    const value = this.props.value;
+    const displayLabelAttribute = this.props.displayLabelAttribute;
+
     if (chartData.length > 0) {
       return (
         <ResponsiveContainer>
-          <PieChart>
-            width = {1200}
+          <PieChart margin = {{ top: 5, right: 100, bottom: 5, left: 100 }}>
+
             <Pie
               activeIndex={this.state.activeIndex}
               activeShape={renderActiveShape} 
               data = {chartData}
-              dataKey = "amount"
+              nameKey = {label}
+              dataKey = {value}
               innerRadius = "60%"
               isAnimationActive = {true}
               animationEasing = "ease"
               onMouseEnter={this.onPieEnter} >
               {
-                chartData.map((entry, index) => <Cell key={index} fill={COLORS[(index * 3) % 17]}/>)
+                // Passing several props data to the onMouseEnter event.
+                chartData.map((entry, index) => <Cell key={index} fill={COLORS[(index * 3) % 17]} nameKey={label} displayLabelAttribute={displayLabelAttribute} />)
               }
               </Pie>
           </PieChart>
