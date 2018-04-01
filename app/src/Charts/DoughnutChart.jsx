@@ -58,7 +58,7 @@ export default class DoughnutChart extends React.Component {
     super(props);
 
     this.state = {
-        activeIndex: 0,
+        activeIndex: -1,
     };
   }
 
@@ -66,6 +66,12 @@ export default class DoughnutChart extends React.Component {
     this.setState({
       activeIndex: index,
     });
+  }
+
+  onPieOut = (data, index) => {
+    this.setState({
+      activeIndex: -1,
+    })
   }
 
   render = () => {
@@ -89,7 +95,8 @@ export default class DoughnutChart extends React.Component {
               innerRadius = "60%"
               isAnimationActive = {true}
               animationEasing = "ease"
-              onMouseEnter={this.onPieEnter} >
+              onMouseEnter = {this.onPieEnter}
+              onMouseOut = {this.onPieOut} >
               {
                 // Passing several props data to the onMouseEnter event.
                 chartData.map((entry, index) => <Cell key={index} fill={COLORS[(index * 3) % 17]} nameKey={label} displayLabelAttribute={displayLabelAttribute} />)
