@@ -1,6 +1,8 @@
 import React from 'react';
 import { ResponsiveContainer, PieChart, Pie, Sector, Cell } from 'recharts';
 
+import { moneyFormatter } from '../Utility/HelperFunction';
+
 const COLORS = ['#00BAF2', '#00BAF2', '#00a7d9', /* light blue */
 '#E80C60', '#E80C60', '#d00a56', /* light pink */
 '#9B26AF', '#9B26AF', '#8b229d', /* light purple */
@@ -22,9 +24,11 @@ const renderActiveShape = (props) => {
   const ey = my;
   const textAnchor = cos >= 0 ? 'start' : 'end';
 
+  const moneyValue = moneyFormatter(value);
+
   return (
     <g>
-      <text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill}>{payload[nameKey]}</text>
+      <text font-weight="bold" x={cx} y={cy} dy={8} textAnchor="middle" fill={fill}>{payload[nameKey]}</text>
       <Sector
         cx={cx}
         cy={cy}
@@ -45,9 +49,9 @@ const renderActiveShape = (props) => {
       />
       <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={fill} fill="none"/>
       <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none"/>
-      <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} textAnchor={textAnchor} fill="#333">{`${payload[displayLabelAttribute]}`}</text>
+      <text font-weight="bold" x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} textAnchor={textAnchor} fill="#333">{`${payload[displayLabelAttribute]}`}</text>
       <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} dy={18} textAnchor={textAnchor} fill="#999">
-        {`${value}`}
+        {`${moneyValue}`}
       </text>
     </g>
   );
