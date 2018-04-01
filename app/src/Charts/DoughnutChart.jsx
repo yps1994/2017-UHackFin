@@ -76,10 +76,13 @@ export default class DoughnutChart extends React.Component {
 
   render = () => {
 
-    const chartData = this.props.data;
     const label = this.props.label;
     const value = this.props.value;
     const displayLabelAttribute = this.props.displayLabelAttribute;
+
+    /* Issue: Need to check why chartData needed to be re-initialized. (See forceDonutChartUpdate function).
+              If not doing so, the chart will not be updated via editing table, even this.props.data is updated here. */
+    const chartData = forceDonutChartUpdate(this.props.data, label, value, displayLabelAttribute);
 
     if (chartData.length > 0) {
       return (
@@ -111,4 +114,13 @@ export default class DoughnutChart extends React.Component {
       );
     }
   }
+}
+
+function forceDonutChartUpdate (chartData, label, value, displayLabelAttribute) { 
+  var result = []; 
+  chartData.forEach((data, i) => {
+    console.log(data[displayLabelAttribute]);
+    result.push({[label]: data[label], [value]: data[value], [displayLabelAttribute]: data[displayLabelAttribute]});
+  });
+  return result; 
 }
