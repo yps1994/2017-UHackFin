@@ -16,15 +16,15 @@ export default class Portfolio extends React.Component {
     this.state = { 
       user_id: 1,
       portfolio_amount: [193000, 200000, 210000, 200300, 206500],
-      portfolio_date: ["2017-10-07","2017-10-14","2017-10-21","2017-10-28", "2017-11-04"],
+      portfolio_date: ["2017-10-07","2017-10-14","2017-10-21","2017-10-28", "2017-11-16"],
       accountList: [
         {
           name: 'Bank Of China',
-          amount: '50000'
+          amount: 50000
         },
         {
           name: 'HSBC',
-          amount: '30000'
+          amount: 30000
         }],
       stockList: [{
         id: 1,
