@@ -66,7 +66,7 @@ export default class Portfolio extends React.Component {
   
     const index = (summaryDateList.findIndex(date => date === "currentDate"));
 
-    if (index == -1) {
+    if (index === -1) {
       summaryList.push({
         date: currentDate,
         amount: capitalTotal });

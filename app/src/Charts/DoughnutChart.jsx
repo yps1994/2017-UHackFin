@@ -123,7 +123,6 @@ export default class DoughnutChart extends React.Component {
 function forceDonutChartUpdate (chartData, label, value, displayLabelAttribute) { 
   var result = []; 
   chartData.forEach((data, i) => {
-    console.log(data[displayLabelAttribute]);
     result.push({[label]: data[label], [value]: data[value], [displayLabelAttribute]: data[displayLabelAttribute]});
   });
   return result; 
