@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 
 import {_} from 'underscore';
+import moment from 'moment';
 
 import BankAccountSection from './BankAccountSection';
 import StockSection from './StockSection';
@@ -53,14 +54,26 @@ export default class Portfolio extends React.Component {
   }
 
   updateCurrentDay = () => {
-    /*var investedAmount = this.obtainTotalInvestedAmount(this.state.stockList);
-    var bankAmount = this.obtainTotalBankAmount(this.state.accountList);
 
-    const portfolioAmount = this.state.portfolio_amount;
-    portfolioAmount[4] = investedAmount + bankAmount;
+    const summaryList = this.state.summaryList;
+    const investedAmount = this.obtainTotalInvestedAmount(this.state.stockList);
+    const bankAmount = this.obtainTotalBankAmount(this.state.accountList);
 
-    this.setState({portfolio_amount: portfolioAmount});*/
-    
+    const capitalTotal = investedAmount + bankAmount;
+    const currentDate = moment().format('YYYY-MM-DD');
+
+    const summaryDateList = (summaryList.map(x => x['date']));
+  
+    const index = (summaryDateList.findIndex(date => date === "currentDate"));
+
+    if (index == -1) {
+      summaryList.push({
+        date: currentDate,
+        amount: capitalTotal });
+    }
+    else {
+      summaryList[index]['amount'] = capitalTotal;
+    }
   }
 
   obtainTotalInvestedAmount = (arr) => {
