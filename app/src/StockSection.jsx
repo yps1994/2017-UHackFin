@@ -3,7 +3,8 @@ import React from 'react';
 import StockTable from './Stock/Table';
 import StockRiskTable from './Stock/RiskTable';
 import StockForm from './Stock/Form';
-import Chart from './Common/Chart';
+
+import DoughnutChart from './Charts/DoughnutChart';
 
 
 export default class StockSection extends React.Component {
@@ -46,7 +47,7 @@ export default class StockSection extends React.Component {
               <StockForm stockList={stockList} updateParentStockList={this.props.updateParentStockList} />
             </div>
             <div className="col-md-6 bankaccount-chart">
-              <Chart data={stockList} />
+              <DoughnutChart data={stockList} />
             </div>
           </div>
 

@@ -52,7 +52,7 @@ const renderActiveShape = (props) => {
   );
 };
 
-export default class Chart extends React.Component {
+export default class DoughnutChart extends React.Component {
   constructor (props) {
     super(props);
 
@@ -99,6 +99,7 @@ export default class Chart extends React.Component {
     }
   }
 }
+
 function convertToPieChartAmountInput (data) {
   var result = [];
   data.forEach((data, i) => result.push({name: data.name, value: Number(data.amount)}));
