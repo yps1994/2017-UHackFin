@@ -13,7 +13,7 @@ export default class BankAccountTable extends React.Component {
   }
 
   onAfterSaveCell = (row, cellName, cellValue) => {
-    this.props.updateParentAccountList(this.updateChildAccountList(this.props.accountList, row, cellValue));
+    this.props.updateParentAccountList(this.updateChildAccountList(this.props.accountList, row, Number(cellValue)));
   }
 
   onAfterDeleteRow = (key) => {
