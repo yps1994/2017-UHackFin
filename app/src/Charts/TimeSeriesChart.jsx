@@ -7,13 +7,12 @@ export default class TimeSeriesChart extends React.Component {
 
   render = () => {
 
-    const date = this.props.date;
     const data = this.props.data;
 
-    if (date.length > 0) {
+    if (data.length > 0) {
       return (
         <ResponsiveContainer>
-          <AreaChart data={convertToTimeSeriesList(date, data) }>
+          <AreaChart data={convertToTimeSeriesList(data) }>
             <Area
               type = "monotone"
               dataKey = "Amount"

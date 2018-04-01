@@ -17,8 +17,7 @@ export default class Portfolio extends React.Component {
       user_id: 1, 
       accountList: [], 
       stockList: [],
-      portfolio_amount: [],
-      portfolio_date: []
+      summaryList: []
     };
   }
 
@@ -87,17 +86,34 @@ export default class Portfolio extends React.Component {
   exampleDataInjection = () => {
     this.setState({ 
       user_id: 1,
-      portfolio_amount: [193000, 200000, 210000, 200300, 206500],
-      portfolio_date: ["2017-10-07","2017-10-14","2017-10-21","2017-10-28", "2017-11-16"],
-      accountList: [
-        {
+      summaryList: [{
+        date: '2017-10-07',
+        amount: 193000
+      },
+      {
+        date: '2017-10-14',
+        amount: 200000
+      },
+      {
+        date: '2017-10-21',
+        amount: 210000
+      },
+      {
+        date: '2017-10-28',
+        amount: 200300
+      },
+      {
+        date: '2017-11-16',
+        amount: 206500
+      }],
+      accountList: [{
           name: 'Bank Of China',
           amount: 50000
-        },
-        {
-          name: 'HSBC',
-          amount: 30000
-        }],
+      },
+      {
+        name: 'HSBC',
+        amount: 30000
+      }],
       stockList: [{
         id: 1,
         code: '0001.HK',
@@ -154,19 +170,20 @@ export default class Portfolio extends React.Component {
 
   // Rendering section
   render = () => {
+
     // get data from state, not from props
+    const user_id = this.state.user_id;
     const accountList = this.state.accountList;
     const stockList = this.state.stockList;
-    const user_id = this.state.user_id;
-    const portfolio_amount = this.state.portfolio_amount;
-    const portfolio_date = this.state.portfolio_date;
+    const summaryList = this.state.summaryList;
+
     return (
       <div>
-          <button style={{float: "right"}} type="button" class="btn btn-info" onClick={this.exampleDataInjection}> Demonstration Button </button>
+          <button style={{float: "right"}} type="button" className="btn btn-info" onClick={this.exampleDataInjection}> Demonstration Button </button>
           <BankAccountSection user_id={user_id} accountList={accountList} updateParentAccountList={this.updateBankAccountList} />
           <StockSection user_id={user_id} stockList={stockList} updateParentStockList={this.updateStockList} />
           <StockSimilaritySection user_id={user_id} stockList={stockList} />
-          <SummarySection user_id={user_id} historyPortfolioAmount={portfolio_amount} historyPortfolioDate={portfolio_date} />
+          <SummarySection user_id={user_id} summaryList={summaryList} />
       </div>
     );
   }

@@ -15,9 +15,9 @@ export const convertUnixTimeToDate = (unixTime) => {
     return (moment(unixTime)).format('YYYY-MM-DD');
 }
 
-export const convertToTimeSeriesList = (date, amount) => {
+export const convertToTimeSeriesList = (data) => {
     var result = [];
-    date.forEach((date, i) => result.push({UnixTime: Date.parse(date), Amount: amount[i]}));
+    data.forEach((data, i) => result.push({UnixTime: Date.parse(data['date']), Amount: data['amount']}));
     return result;
 }
 

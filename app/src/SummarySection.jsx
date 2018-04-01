@@ -8,9 +8,8 @@ export default class SummarySection extends React.Component {
   render = () => {
     // get data from state, not from props
 
-    const portfolio_date = this.props.historyPortfolioDate;
-    const portfolio_amount = this.props.historyPortfolioAmount;
-  
+    const summaryList = this.props.summaryList;
+
     return (
 
       <div id="summary-wrapper">
@@ -21,7 +20,7 @@ export default class SummarySection extends React.Component {
 
         <div id="summary-content">
           <div id="summary-chart">
-            <TimeSeriesChart date={portfolio_date} data={portfolio_amount} />
+            <TimeSeriesChart data={summaryList} />
           </div>
         </div>
 
