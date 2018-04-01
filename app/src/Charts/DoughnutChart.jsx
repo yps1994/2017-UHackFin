@@ -70,8 +70,6 @@ export default class DoughnutChart extends React.Component {
 
   render = () => {
 
-
-
     const chartData = this.props.data;
     const label = this.props.label;
     const value = this.props.value;

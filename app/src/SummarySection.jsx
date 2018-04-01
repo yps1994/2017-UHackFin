@@ -1,8 +1,6 @@
 import React from 'react';
-import moment from 'moment';
-import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip } from 'recharts';
 
-// Peter Yeung: ReactJS used huge amount of syntax similar with lambda expression
+import TimeSeriesChart from './Charts/TimeSeriesChart';
 
 export default class SummarySection extends React.Component {
 
@@ -23,47 +21,11 @@ export default class SummarySection extends React.Component {
 
         <div id="summary-content">
           <div id="summary-chart">
-            <ResponsiveContainer>
-              <AreaChart data={convertToTimeSeriesData(portfolio_date, portfolio_amount) }>
-                <Area
-                  type = "monotone"
-                  dataKey = "Amount"
-                  stroke = "black"
-                  fill = "grey"
-                />
-                <XAxis
-                  name = "Date"
-                  domain = {['dataMin', 'dataMax']}
-                  dataKey = "UnixTime"
-                  tickSize = {15}
-                  tickFormatter = {(unixTime) => convertUnixTimeToDate(unixTime)}
-                  type = "number"
-                />
-                <YAxis
-                  width = {100}
-                  domain = {['auto', 'auto']}
-                  tickSize = {15}
-                  tickFormatter = {(amount) => toMoneyFormat(amount)}
-                />
-                <Tooltip
-                  formatter = {(amount) => toMoneyFormat(amount)}
-                  labelFormatter = {(unixTime) => convertUnixTimeToDate(unixTime)}
-                />
-              </AreaChart>
-            </ResponsiveContainer>
+            <TimeSeriesChart date={portfolio_date} data={portfolio_amount} />
           </div>
         </div>
 
       </div>
     );
   }
-}
-
-const toMoneyFormat = (amount) => { return "$"+parseFloat(amount).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'); }
-const convertUnixTimeToDate = (unixTime) => { return (moment(unixTime)).format('YYYY-MM-DD'); }
-
-function convertToTimeSeriesData (date, amount) {
-  var result = [];
-  date.forEach((date, i) => result.push({UnixTime: Date.parse(date), Amount: amount[i]}));
-  return result;
 }

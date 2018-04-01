@@ -1,5 +1,7 @@
 import React from 'react';
-import {Form, FormGroup, ControlLabel, FormControl, HelpBlock, Button} from 'react-bootstrap';
+import { Form, FormGroup, ControlLabel, FormControl, HelpBlock, Button } from 'react-bootstrap';
+
+import { isNumeric } from '../Utility/HelperFunction';
 
 export default class BankAccountForm extends React.Component {
   constructor (props) {
@@ -111,11 +113,4 @@ export default class BankAccountForm extends React.Component {
       </div>
     );
   }
-}
-
-function isNumeric (amount) {
-  var parsedAmount = parseFloat(amount, 10);
-  if (isNaN(parsedAmount) || !isFinite(parsedAmount) || parsedAmount < 0) return false;
-
-  return true;
 }

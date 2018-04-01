@@ -1,6 +1,6 @@
 import React from 'react';
-import StockSimilarityTable from './Stock/SimilarityTable';
 
+import StockSimilarityTable from './Stock/SimilarityTable';
 
 export default class StockSimilaritySection extends React.Component {
 

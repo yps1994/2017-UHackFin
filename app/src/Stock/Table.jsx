@@ -1,6 +1,8 @@
 import React from 'react';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 
+import { ReactTableAmountFormatter, ReactTableAmountValidator } from '../Utility/HelperFunction';
+
 export default class StockTable extends React.Component {
 
   updateChildStockList = (stockList, row, cellName, cellValue) => {
@@ -30,15 +32,6 @@ export default class StockTable extends React.Component {
 
     
     this.props.updateParentStockList(stockList);
-  }
-
-  csvFormatter (cell, row) {
-    return `${row.id}: ${cell}`;
-  }
-
-  moneyFormatter (cell, row) {
-    var formattedVal = parseFloat(cell).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
-    return `$ ${formattedVal}`;
   }
 
   // Rendering section
@@ -86,22 +79,11 @@ export default class StockTable extends React.Component {
         <TableHeaderColumn dataField='name' width='160' dataSort editable={false}> Stock Name</TableHeaderColumn>
         <TableHeaderColumn dataField='tradingDay' width='120' dataSort editable={false}> Trading Day </TableHeaderColumn>
         <TableHeaderColumn dataField='shares' width='100' dataSort> Shares </TableHeaderColumn>
-        <TableHeaderColumn dataField='buyingPrice' width='130' dataSort editable={{validator: amountValidator}} dataFormat={this.moneyFormatter}> Buying Price</TableHeaderColumn>
-        <TableHeaderColumn dataField='currentPrice' width='130' dataSort dataFormat={this.moneyFormatter}> Current Price </TableHeaderColumn>
-        <TableHeaderColumn dataField='earn' width='140'dataSort dataFormat={this.moneyFormatter} editable={false}> Changes </TableHeaderColumn>
+        <TableHeaderColumn dataField='buyingPrice' width='130' dataSort editable={{validator: ReactTableAmountValidator}} dataFormat={ReactTableAmountFormatter}> Buying Price</TableHeaderColumn>
+        <TableHeaderColumn dataField='currentPrice' width='130' dataSort dataFormat={ReactTableAmountFormatter}> Current Price </TableHeaderColumn>
+        <TableHeaderColumn dataField='earn' width='140'dataSort dataFormat={ReactTableAmountFormatter} editable={false}> Changes </TableHeaderColumn>
       </BootstrapTable>
       
     );
   }
-}
-
-function amountValidator(amount) {
-  
-    var parsedAmount = parseFloat(amount, 10);
-    
-    if (isNaN(parsedAmount) || !isFinite(parsedAmount) || parsedAmount < 0) {
-      return "Amount must be greater than or equal to 0.";
-    }
-  
-    return true;
 }

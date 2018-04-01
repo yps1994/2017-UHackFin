@@ -1,7 +1,10 @@
 import React from 'react';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 
+import { ReactTableAmountFormatter, ReactTableAmountValidator } from '../Utility/HelperFunction';
+
 export default class BankAccountTable extends React.Component {
+
   updateChildAccountList = (accountList, row, cellValue) => {
     var index = accountList.findIndex(i => i.name === row.name);
     accountList[index]['amount'] = cellValue;
@@ -27,14 +30,6 @@ export default class BankAccountTable extends React.Component {
     this.props.updateParentAccountList(accountList);
   }
 
-  csvFormatter (cell, row) {
-    return `${row.id}: ${cell}`;
-  }
-
-  amountFormatter (cell, row) {
-    var formattedVal = parseFloat(cell).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
-    return `$ ${formattedVal}`;
-  }
   // Rendering section
   render = () => {
     // Obtain account data from parent component
@@ -76,19 +71,8 @@ export default class BankAccountTable extends React.Component {
       <BootstrapTable data={listAccount} cellEdit={cellEditProp} selectRow={selectRowProp} options={options}
         deleteRow exportCSV pagination striped hover condensed>
         <TableHeaderColumn isKey dataField='name' dataSort>Account name</TableHeaderColumn>
-          <TableHeaderColumn dataField='amount' dataSort editable={{validator: amountValidator}} dataFormat={this.amountFormatter}>Amount</TableHeaderColumn>
+          <TableHeaderColumn dataField='amount' dataSort editable={{validator: ReactTableAmountValidator}} dataFormat={ReactTableAmountFormatter}>Amount</TableHeaderColumn>
       </BootstrapTable>
     );
   }
-}
-
-function amountValidator(amount) {
-  
-    var parsedAmount = parseFloat(amount, 10);
-    
-    if (isNaN(parsedAmount) || !isFinite(parsedAmount) || parsedAmount < 0) {
-      return "Amount must be greater than or equal to 0.";
-    }
-  
-    return true;
 }

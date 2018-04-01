@@ -6,6 +6,7 @@ import StockForm from './Stock/Form';
 
 import DoughnutChart from './Charts/DoughnutChart';
 
+import { moneyFormatter } from './Utility/HelperFunction';
 
 export default class StockSection extends React.Component {
 
@@ -34,9 +35,7 @@ export default class StockSection extends React.Component {
           <div className="stock-table">
             <StockTable user_id={user_id} stockList={stockList} updateParentStockList={this.props.updateParentStockList} />
             <div className="well well-sm pull-right text-right display-summary-box"> <h3>
-                Total invested: $ {this.obtainTotalInvestedAmount(stockList)
-                  .toFixed(2)
-                  .replace(/(\d)(?=(\d{3})+\.)/g, '$1,')}
+                Total invested: $ {moneyFormatter(this.obtainTotalInvestedAmount(stockList))}
             </h3> </div>
 
             <StockRiskTable user_id={user_id} stockList={stockList} />
