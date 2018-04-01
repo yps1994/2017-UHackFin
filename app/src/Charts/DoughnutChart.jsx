@@ -8,6 +8,8 @@ const COLORS = ['#00BAF2', '#00BAF2', '#00a7d9', /* light blue */
 '#FB301E', '#FB301E', '#e12b1b', /* med red */
 '#00AE4D', '#00AE4D', '#00AE4D']; /* med green */
 
+{/* From recharts example */}
+
 const renderActiveShape = (props) => {
   const RADIAN = Math.PI / 180;
   const { cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle, fill, payload, name, value } = props;
@@ -44,9 +46,9 @@ const renderActiveShape = (props) => {
       />
       <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={fill} fill="none"/>
       <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none"/>
-      <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} textAnchor={textAnchor} fill="#333">{`Name: ${name}`}</text>
+      <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} textAnchor={textAnchor} fill="#333">{`${name}`}</text>
       <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} dy={18} textAnchor={textAnchor} fill="#999">
-        {`(Value ${value})`}
+        {`${value}`}
       </text>
     </g>
   );
@@ -69,18 +71,20 @@ export default class DoughnutChart extends React.Component {
 
   render = () => {
 
-    const chartData = convertToPieChartAmountInput(this.props.data)
+    const chartData = this.props.data;
 
+    console.log(chartData);
+    
     if (chartData.length > 0) {
       return (
         <ResponsiveContainer>
           <PieChart>
             width = {1200}
             <Pie
-            activeIndex={this.state.activeIndex}
-            activeShape={renderActiveShape} 
+              activeIndex={this.state.activeIndex}
+              activeShape={renderActiveShape} 
               data = {chartData}
-              dataKey = "value"
+              dataKey = "amount"
               innerRadius = "60%"
               isAnimationActive = {true}
               animationEasing = "ease"
@@ -98,10 +102,4 @@ export default class DoughnutChart extends React.Component {
       );
     }
   }
-}
-
-function convertToPieChartAmountInput (data) {
-  var result = [];
-  data.forEach((data, i) => result.push({name: data.name, value: Number(data.amount)}));
-  return result;
 }
