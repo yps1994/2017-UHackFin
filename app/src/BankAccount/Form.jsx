@@ -61,8 +61,9 @@ export default class BankAccountForm extends React.Component {
     const accountList = this.props.accountList;
     const inputAccountName = this.state.inputAccountName;
 
-    if (accountList == null || inputAccountName === '') return null;
+    //if (accountList == null || inputAccountName === '') return null;
 
+    if (inputAccountName.length > 30) return 'error';
     var index = accountList.findIndex(i => i.name === inputAccountName);
 
     if (index !== -1 || !inputAccountName) return 'error';
@@ -91,7 +92,7 @@ export default class BankAccountForm extends React.Component {
               onChange={name => this.updateInputAccountName(name)}
             />
             <FormControl.Feedback/>
-            <HelpBlock>Your account&#39;s name should be different from the above table. </HelpBlock>
+            <HelpBlock>Your account&#39;s name should be different from the above table. (Maximum 30 characters.) </HelpBlock>
           </FormGroup>
 
           <FormGroup controlId="formAccountAmount" validationState={this.getAccountAmountValidation()}>
