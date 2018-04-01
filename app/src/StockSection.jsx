@@ -19,8 +19,10 @@ export default class StockSection extends React.Component {
       return total + obj['amount'];
     }, 0);
   }
+  
   // Rendering section
   render = () => {
+
     // get data from state, not from props
     const stockList = this.props.stockList;
     const user_id = this.props.user_id;
@@ -46,7 +48,7 @@ export default class StockSection extends React.Component {
               <StockForm stockList={stockList} updateParentStockList={this.props.updateParentStockList} />
             </div>
             <div className="col-md-6 stock-chart">
-              <DoughnutChart data={stockList} label="code" value="amount" displayLabelAttribute="code" />
+              <DoughnutChart data={stockList} label="name" value="amount" displayLabelAttribute="code" />
             </div>
           </div>
 
