@@ -34,7 +34,7 @@ export default class BankAccountForm extends React.Component {
 
     accountList.push({
       name: this.state.inputAccountName,
-      amount: parseFloat(this.state.inputAccountAmount).toFixed(2)
+      amount: Number(parseFloat(this.state.inputAccountAmount).toFixed(2))
     });
 
     this.props.updateParentAccountList(accountList);
