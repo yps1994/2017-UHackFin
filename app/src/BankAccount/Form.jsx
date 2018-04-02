@@ -61,7 +61,7 @@ export default class BankAccountForm extends React.Component {
     const accountList = this.props.accountList;
     const inputAccountName = this.state.inputAccountName;
 
-    //if (accountList == null || inputAccountName === '') return null;
+    if (accountList == null || inputAccountName === '') return null;
 
     if (inputAccountName.length > 30) return 'error';
     var index = accountList.findIndex(i => i.name === inputAccountName);
