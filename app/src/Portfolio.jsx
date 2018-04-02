@@ -61,7 +61,7 @@ export default class Portfolio extends React.Component {
 
     const currentDate = moment().format('YYYY-MM-DD');
     const summaryDateList = (summaryList.map(x => x['date']));
-    const index = (summaryDateList.findIndex(date => date === "currentDate"));
+    const index = (summaryDateList.findIndex(date => date === currentDate));
 
     if (index === -1) {
       summaryList.push({
