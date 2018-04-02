@@ -56,14 +56,11 @@ export default class Portfolio extends React.Component {
   updateCurrentDay = () => {
 
     const summaryList = this.state.summaryList;
-    const investedAmount = this.obtainTotalInvestedAmount(this.state.stockList);
-    const bankAmount = this.obtainTotalBankAmount(this.state.accountList);
+ 
+    const capitalTotal = this.obtainTotalInvestedAmount(this.state.stockList) + this.obtainTotalBankAmount(this.state.accountList);
 
-    const capitalTotal = investedAmount + bankAmount;
     const currentDate = moment().format('YYYY-MM-DD');
-
     const summaryDateList = (summaryList.map(x => x['date']));
-  
     const index = (summaryDateList.findIndex(date => date === "currentDate"));
 
     if (index === -1) {
