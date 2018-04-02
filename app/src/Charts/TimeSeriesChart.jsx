@@ -1,5 +1,5 @@
 import React from 'react';
-import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip } from 'recharts';
+import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
 
 import { convertUnixTimeToDate, convertToTimeSeriesList, moneyFormatter } from '../Utility/HelperFunction';
 
@@ -18,6 +18,7 @@ export default class TimeSeriesChart extends React.Component {
               dataKey = "Amount"
               stroke = "black"
               fill = "grey"
+              dot = {true}
             />
             <XAxis
               name = "Date"
@@ -33,6 +34,7 @@ export default class TimeSeriesChart extends React.Component {
               tickSize = {15}
               tickFormatter = {(amount) => moneyFormatter(amount)}
             />
+            <CartesianGrid strokeDasharray="3 3"/>
             <Tooltip
               formatter = {(amount) => moneyFormatter(amount)}
               labelFormatter = {(unixTime) => convertUnixTimeToDate(unixTime)}
