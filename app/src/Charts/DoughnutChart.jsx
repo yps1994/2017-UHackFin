@@ -62,7 +62,7 @@ export default class DoughnutChart extends React.Component {
     super(props);
 
     this.state = {
-        activeIndex: -1,
+        activeIndex: 0,
     };
   }
 
@@ -74,7 +74,7 @@ export default class DoughnutChart extends React.Component {
 
   onPieOut = (data, index) => {
     this.setState({
-      activeIndex: -1,
+      activeIndex: 0,
     })
   }
 
@@ -121,9 +121,7 @@ export default class DoughnutChart extends React.Component {
 }
 
 function forceDonutChartUpdate (chartData, label, value, displayLabelAttribute) { 
-  var result = []; 
-  chartData.forEach((data, i) => {
-    result.push({[label]: data[label], [value]: data[value], [displayLabelAttribute]: data[displayLabelAttribute]});
-  });
-  return result; 
+
+  return (chartData.map(x => ({ [label]: x[label], [value]: x[value], [displayLabelAttribute]: x[displayLabelAttribute] })));
+
 }
