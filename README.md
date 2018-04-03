@@ -1,6 +1,4 @@
-# 2017_ProjectTemplate
-
-Project template
+# 2017-UHackFin
 
 1. `app/` - front-end design
 2. `backend/` -  back-end design
