@@ -6,6 +6,7 @@ import axios from 'axios';
 import moment from 'moment';
 
 import { isNumeric } from '../Utility/HelperFunction';
+import '../../node_modules/react-datepicker/dist/react-datepicker.css';
 
 export default class StockForm extends React.Component {
   constructor (props) {
