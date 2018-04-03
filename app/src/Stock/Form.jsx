@@ -1,12 +1,12 @@
 import React from 'react';
 import { Form, FormGroup, ControlLabel, FormControl, HelpBlock, Button } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
-import '../../node_modules/react-datepicker/dist/datepicker.css';
 
 import axios from 'axios';
 import moment from 'moment';
 
 import { isNumeric } from '../Utility/HelperFunction';
+import '../../node_modules/react-datepicker/dist/react-datepicker.css';
 
 export default class StockForm extends React.Component {
   constructor (props) {
