@@ -1,11 +1,12 @@
 import React from 'react';
+import { Form, FormGroup, ControlLabel, FormControl, HelpBlock, Button } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
-import moment from 'moment';
-import {Form, FormGroup, ControlLabel, FormControl, HelpBlock, Button} from 'react-bootstrap';
-import axios from 'axios';
-
 import '../../node_modules/react-datepicker/dist/datepicker.css';
 
+import axios from 'axios';
+import moment from 'moment';
+
+import { isNumeric } from '../Utility/HelperFunction';
 
 export default class StockForm extends React.Component {
   constructor (props) {
@@ -185,11 +186,4 @@ export default class StockForm extends React.Component {
       </div>
     );
   }
-}
-
-function isNumeric (amount) {
-  var parsedAmount = parseFloat(amount, 10);
-  if (isNaN(parsedAmount) || !isFinite(parsedAmount) || parsedAmount < 0) return false;
-
-  return true;
 }

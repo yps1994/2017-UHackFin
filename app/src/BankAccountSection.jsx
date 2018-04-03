@@ -3,7 +3,7 @@ import React from 'react';
 import BankAccountTable from './BankAccount/Table';
 import BankAccountForm from './BankAccount/Form';
 
-import Chart from './Common/Chart';
+import DoughnutChart from './Charts/DoughnutChart';
 
 // Peter Yeung: ReactJS used huge amount of syntax similar with lambda expression
 
@@ -19,13 +19,13 @@ export default class BankAccountSection extends React.Component {
         <div id="section-text">
           1. Bank Account <hr/>
         </div>
-        <div id="bankaccount-content">
+        <div id="bankaccount-content" className="row">
           <div className="col-md-6 bankaccount-table divider-right-4px">
             <BankAccountTable accountList={accountList} updateParentAccountList={this.props.updateParentAccountList} />
             <BankAccountForm accountList={accountList} updateParentAccountList={this.props.updateParentAccountList} />
           </div>
           <div className="col-md-6 bankaccount-chart">
-            <Chart data={accountList} />
+            <DoughnutChart data={accountList} label="name" value="amount" displayLabelAttribute="name"/>
           </div>
         </div>
       </div>

@@ -1,10 +1,6 @@
 import React from 'react';
 
-import StockTable from './Stock/Table';
 import StockSimilarityTable from './Stock/SimilarityTable';
-import StockForm from './Stock/Form';
-import Chart from './Common/Chart';
-
 
 export default class StockSimilaritySection extends React.Component {
 

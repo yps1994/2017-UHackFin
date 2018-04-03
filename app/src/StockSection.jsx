@@ -3,8 +3,10 @@ import React from 'react';
 import StockTable from './Stock/Table';
 import StockRiskTable from './Stock/RiskTable';
 import StockForm from './Stock/Form';
-import Chart from './Common/Chart';
 
+import DoughnutChart from './Charts/DoughnutChart';
+
+import { moneyFormatter } from './Utility/HelperFunction';
 
 export default class StockSection extends React.Component {
 
@@ -17,8 +19,10 @@ export default class StockSection extends React.Component {
       return total + obj['amount'];
     }, 0);
   }
+  
   // Rendering section
   render = () => {
+
     // get data from state, not from props
     const stockList = this.props.stockList;
     const user_id = this.props.user_id;
@@ -29,22 +33,25 @@ export default class StockSection extends React.Component {
           2. Stock Portfolio &amp; Risk Indicator <hr/>
         </div>
         <div id="stock-content">
-          <div className="stock-table">
 
+          <div className="stock-table">
             <StockTable user_id={user_id} stockList={stockList} updateParentStockList={this.props.updateParentStockList} />
             <div className="well well-sm pull-right text-right display-summary-box"> <h3>
-                Total invested: $ {this.obtainTotalInvestedAmount(stockList)
-                  .toFixed(2)
-                  .replace(/(\d)(?=(\d{3})+\.)/g, '$1,')}
+                Total invested: $ {moneyFormatter(this.obtainTotalInvestedAmount(stockList))}
             </h3> </div>
+
             <StockRiskTable user_id={user_id} stockList={stockList} />
           </div>
-            <div className="col-md-6 stock-form divider-right-4px">
-            <StockForm stockList={stockList} updateParentStockList={this.props.updateParentStockList} />
+
+          <div className="row">
+              <div className="col-md-6 stock-form divider-right-4px">
+              <StockForm stockList={stockList} updateParentStockList={this.props.updateParentStockList} />
+            </div>
+            <div className="col-md-6 stock-chart">
+              <DoughnutChart data={stockList} label="name" value="amount" displayLabelAttribute="code" />
+            </div>
           </div>
-          <div className="col-md-6 bankaccount-chart">
-            <Chart data={stockList} />
-          </div>
+
         </div>
       </div>
     );

@@ -1,5 +1,7 @@
 import React from 'react';
-import {Form, FormGroup, ControlLabel, FormControl, HelpBlock, Button} from 'react-bootstrap';
+import { Form, FormGroup, ControlLabel, FormControl, HelpBlock, Button } from 'react-bootstrap';
+
+import { isNumeric } from '../Utility/HelperFunction';
 
 export default class BankAccountForm extends React.Component {
   constructor (props) {
@@ -34,7 +36,7 @@ export default class BankAccountForm extends React.Component {
 
     accountList.push({
       name: this.state.inputAccountName,
-      amount: parseFloat(this.state.inputAccountAmount).toFixed(2)
+      amount: Number(parseFloat(this.state.inputAccountAmount).toFixed(2))
     });
 
     this.props.updateParentAccountList(accountList);
@@ -61,6 +63,7 @@ export default class BankAccountForm extends React.Component {
 
     if (accountList == null || inputAccountName === '') return null;
 
+    if (inputAccountName.length > 30) return 'error';
     var index = accountList.findIndex(i => i.name === inputAccountName);
 
     if (index !== -1 || !inputAccountName) return 'error';
@@ -89,7 +92,7 @@ export default class BankAccountForm extends React.Component {
               onChange={name => this.updateInputAccountName(name)}
             />
             <FormControl.Feedback/>
-            <HelpBlock>Your account&#39;s name should be different from the above table. </HelpBlock>
+            <HelpBlock>Your account&#39;s name should be different from the above table. (Maximum 30 characters.) </HelpBlock>
           </FormGroup>
 
           <FormGroup controlId="formAccountAmount" validationState={this.getAccountAmountValidation()}>
@@ -111,11 +114,4 @@ export default class BankAccountForm extends React.Component {
       </div>
     );
   }
-}
-
-function isNumeric (amount) {
-  var parsedAmount = parseFloat(amount, 10);
-  if (isNaN(parsedAmount) || !isFinite(parsedAmount) || parsedAmount < 0) return false;
-
-  return true;
 }
