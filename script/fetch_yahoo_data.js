@@ -1,133 +1,127 @@
-#!/usr/bin/env node
-/** Fetch Yahoo finance data and store it to MYSQL_DATABASE.stocks_raw
+/* Fetch Yahoo finance data and store it to MYSQL_DATABASE.daily
  * Run:
  *      node fetch_yahoo_data.js
  * Note:
- *      1. MYSQL_DATABASE, MYSQL_USER, MYSQL_PASSWORD, MYSQL_PORT, MYSQL_HOST must be set
- *      2. when, mysql, moment and yahoo-finance will be used, if the package is missing, 
- *         run `npm install`
- *      3. DURATION and CSVPATH are inputs, which can be modified accordingly
+ *      1. MYSQL_USER, MYSQL_PASSWORD must be set
+ *      2. MYSQL_HOST, MYSQL_PORT, MYSQL_DATABASE has default value
+ *      2. DURATION can be changed according to task details
  */
 
-var when = require('when');
-var moment = require('moment');
-var yahooFinance = require('yahoo-finance');
-var utils = require('./utils');
+const mysql = require('mysql');
+const moment = require('moment');
+const yahooFinance = require('yahoo-finance');
+const winston = require('winston');
+const _ = require('lodash');
 
 // fetch range
 const DURATION = 1;
-const CSVPATH = 'csv/stocks_id.csv';
 
-// Read stocks symbols
-function readSymbols(workspace) {
-  return when.promise(function (resolve, reject) {
-    utils.readCSV(CSVPATH, function (rows) {
-      workspace.symbols = rows.map(function (row) {
-        return row.ids;
-      });
-      resolve(workspace);
-    });
+// setting logger
+const logger = new (winston.Logger)({
+  transports: [
+    new (winston.transports.Console)({
+      timestamp: true,
+      colorize: true,
+      level: process.env.NODE_ENV === 'development' ? 'verbose' : 'info',
+    })
+  ]
+});
+
+// Create a connection
+const connectDB = workspace => {
+  const db = mysql.createConnection({
+    host: process.env.MYSQL_HOST || '127.0.0.1',
+    port: process.env.MYSQL_PORT || 3306,
+    user: process.env.MYSQL_USER,
+    password: process.env.MYSQL_PASSWORD,
+    database: process.env.MYSQL_DATABASE || 'stock'
   });
-}
 
-// Connect to database
-function connectDB(workspace) {
-  // create connection configuration
-  var db = utils.connectDB();
-
-  // create connection promise
-  return when.promise(function (resolve, reject) {
-    db.connect(function (err) {
+  return new Promise((resolve, reject) => {
+    db.connect(err => {
       if (err) {
         reject(err);
       } else {
         workspace.db = db;
+        logger.info('Connected to database.');
         resolve(workspace);
       }
     });
   });
-}
+};
 
-// Fetch data from Yahoo Finance
-function fetchData(workspace) {
-  return when.promise(function (resolve, reject) {
+// fetch stock symbols
+const fetchSymbols = workspace => {
+  return new Promise((resolve, reject) => {
+    workspace.db.query('SELECT STOCKCODE FROM detaills', (err, result) => {
+      if (err) {
+        reject(err);
+      } else {
+        // only HK stocks are allowed
+        workspace.symbols = result.map(x => x.STOCKCODE + '.HK');
+        logger.info('Fetched all stocks IDs.');
+        resolve(workspace);
+      }
+    });
+  });
+};
+
+// Fetch Yahoo Stock Data
+const fetchYahooData = workspace => {
+  return new Promise((resolve, reject) => {
     // fetch data from -1+ duration days to -1 days
     yahooFinance.historical({
       symbols: workspace.symbols,
       from: moment().subtract(DURATION + 1, 'days').format('YYYY-MM-DD'),
       to: moment().subtract(1, 'days').format('YYYY-MM-DD'),
       period: 'd'
-    }, function (err, quotes) {
+    }, (err, quotes) => {
       if (err) {
         reject(err);
       } else {
-        workspace.data = quotes;
+        workspace.quotes = quotes;
+        logger.info('Fetched Yahoo Stocks Data.');
         resolve(workspace);
       }
     });
   });
-}
+};
 
-// Parsing data
-function parseData(workspace) {
-  // reformat data into sql statement
-  workspace.records = [];
-  Object.keys(workspace.data).forEach(function (key) {
-    workspace.data[key].forEach(function (record) {
-      if (record.open !== null && record.close !== null) {
-        workspace.records.push(`REPLACE INTO stocks_raw (id, date, high, low, open, close) \
-      VALUES ('${record.symbol}', '${moment(record.date).format('YYYY-MM-DD')}', ${record.high}, \
-      ${record.low}, ${record.open}, ${record.close});`);
-      }
-    });
+// InsertData to daily table
+// We use bulk insert to improve the performance
+const insertData = workspace => {
+  const sql_prefix = 'REPLACE INTO daily (id, date, high, low, open, close) VALUES ?';
+  const records = _.flatMap(workspace.quotes).filter(x => {
+    return x.open !== null && x.close !== null;
   });
-
-  return workspace;
-}
-
-// Insert data to database
-function insertData(workspace) {
-  // insert the data to sqldb asychronously
-  var promises = when.map(workspace.records, function (record) {
-    return when.promise(function (resolve, reject) {
-      workspace.db.query(record, function (error) {
-        if (error) {
-          reject(error);
-        } else {
-          resolve(record);
-        }
-      });
-    });
+  const valid_records = records.map(x => {
+    return [x.symbol, moment(x.date).format('YYYY-MM-DD'), x.high, x.low, x.open, x.close];
   });
-
-  // check if all the insertion are successfull
-  return when.promise(function (resolve, reject) {
-    promises.done(function (result, err) {
+  return new Promise((resolve, reject) => {
+    workspace.db.query(sql_prefix, [valid_records], err => {
       if (err) {
         reject(err);
       } else {
+        logger.info('Data is inserted into table daily');
         resolve(workspace);
       }
     });
   });
-}
+};
 
-// done and disconent db
-function clean(workspace) {
+// Close the connection
+const clean = workspace => {
   workspace.db.end();
   return workspace;
-}
+};
+
 
 // main program
-readSymbols({})
-  .then(connectDB)
-  .then(fetchData)
-  .then(parseData)
+connectDB({})
+  .then(fetchSymbols)
+  .then(fetchYahooData)
   .then(insertData)
   .then(clean)
-  .done(function (result, err) {
-    if (err) {
-      console.log(err);
-    }
-    console.log("Finished fetching data at " + moment().format());
+  .catch(err => {
+    logger.error(err);
   });
