@@ -1,12 +1,11 @@
 {
   "name": "script",
-  "version": "0.0.0",
   "private": true,
   "dependencies": {
-    "csvtojson": "^1.1.9",
-    "moment": "^2.19.1",
+    "moment": "^2.22.0",
     "mysql": "^2.15.0",
     "when": "^3.7.8",
-    "yahoo-finance": "^0.3.4"
+    "winston": "^2.4.1",
+    "yahoo-finance": "^0.3.5"
   }
 }
