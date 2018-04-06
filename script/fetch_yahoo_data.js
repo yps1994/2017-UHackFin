@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 /* Fetch Yahoo finance data and store it to MYSQL_DATABASE.daily
  * Run:
  *      node fetch_yahoo_data.js
@@ -12,7 +11,7 @@ const mysql = require('mysql');
 const moment = require('moment');
 const yahooFinance = require('yahoo-finance');
 const winston = require('winston');
-const _ = require('lodash')
+const _ = require('lodash');
 
 // fetch range
 const DURATION = 1;
@@ -41,10 +40,10 @@ const connectDB = workspace => {
   return new Promise((resolve, reject) => {
     db.connect(err => {
       if (err) {
-        reject(err)
+        reject(err);
       } else {
         workspace.db = db;
-        logger.info('Connected to database.')
+        logger.info('Connected to database.');
         resolve(workspace);
       }
     });
@@ -56,16 +55,16 @@ const fetchSymbols = workspace => {
   return new Promise((resolve, reject) => {
     workspace.db.query('SELECT STOCKCODE FROM detaills', (err, result) => {
       if (err) {
-        reject(err)
+        reject(err);
       } else {
         // only HK stocks are allowed
         workspace.symbols = result.map(x => x.STOCKCODE + '.HK');
-        logger.info('Fetched all stocks IDs.')
+        logger.info('Fetched all stocks IDs.');
         resolve(workspace);
       }
-    })
-  })
-}
+    });
+  });
+};
 
 // Fetch Yahoo Stock Data
 const fetchYahooData = workspace => {
@@ -81,19 +80,19 @@ const fetchYahooData = workspace => {
         reject(err);
       } else {
         workspace.quotes = quotes;
-        logger.info('Fetched Yahoo Stocks Data.')
+        logger.info('Fetched Yahoo Stocks Data.');
         resolve(workspace);
       }
     });
   });
-}
+};
 
 // InsertData to daily table
 // We use bulk insert to improve the performance
 const insertData = workspace => {
   const sql_prefix = 'REPLACE INTO daily (id, date, high, low, open, close) VALUES ?';
   const records = _.flatMap(workspace.quotes).filter(x => {
-    return x.open !== null && x.close !== null
+    return x.open !== null && x.close !== null;
   });
   const valid_records = records.map(x => {
     return [x.symbol, moment(x.date).format('YYYY-MM-DD'), x.high, x.low, x.open, x.close];
@@ -106,16 +105,15 @@ const insertData = workspace => {
         logger.info('Data is inserted into table daily');
         resolve(workspace);
       }
-    })
-  })
-  return workspace;
-}
+    });
+  });
+};
 
 // Close the connection
 const clean = workspace => {
-  workspace.db.end()
-  return workspace
-}
+  workspace.db.end();
+  return workspace;
+};
 
 
 // main program
@@ -126,4 +124,4 @@ connectDB({})
   .then(clean)
   .catch(err => {
     logger.error(err);
-  })
+  });
