@@ -2,6 +2,7 @@
   "name": "script",
   "private": true,
   "dependencies": {
+    "lodash": "^4.17.5",
     "moment": "^2.22.0",
     "mysql": "^2.15.0",
     "winston": "^2.4.1",

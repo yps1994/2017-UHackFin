@@ -12,6 +12,7 @@ const mysql = require('mysql');
 const moment = require('moment');
 const yahooFinance = require('yahoo-finance');
 const winston = require('winston');
+const _ = require('lodash')
 
 // fetch range
 const DURATION = 1;
@@ -53,7 +54,7 @@ const connectDB = workspace => {
 // fetch stock symbols
 const fetchSymbols = workspace => {
   return new Promise((resolve, reject) => {
-    workspace.db.query('SELECT STOCKCODE FROM detail', (err, result) => {
+    workspace.db.query('SELECT STOCKCODE FROM detaills', (err, result) => {
       if (err) {
         reject(err)
       } else {
@@ -91,17 +92,14 @@ const fetchYahooData = workspace => {
 // We use bulk insert to improve the performance
 const insertData = workspace => {
   const sql_prefix = 'REPLACE INTO daily (id, date, high, low, open, close) VALUES ?';
-  let records = [];
-  Object.keys(workspace.quotes).forEach(function (key) {
-    workspace.quotes[key].forEach(function (record) {
-      if (record.open !== null && record.close !== null) {
-        records.push([record.symbol, moment(record.date).format('YYYY-MM-DD'), record.high,
-        record.low, record.open, record.close]);
-      }
-    });
+  const records = _.flatMap(workspace.quotes).filter(x => {
+    return x.open !== null && x.close !== null
+  });
+  const valid_records = records.map(x => {
+    return [x.symbol, moment(x.date).format('YYYY-MM-DD'), x.high, x.low, x.open, x.close];
   });
   return new Promise((resolve, reject) => {
-    workspace.db.query(sql_prefix, [records], err => {
+    workspace.db.query(sql_prefix, [valid_records], err => {
       if (err) {
         reject(err);
       } else {
