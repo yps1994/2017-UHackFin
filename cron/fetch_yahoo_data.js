@@ -53,12 +53,12 @@ const connectDB = workspace => {
 // fetch stock symbols
 const fetchSymbols = workspace => {
   return new Promise((resolve, reject) => {
-    workspace.db.query('SELECT STOCKCODE FROM detail LIMIT 50', (err, result) => {
+    workspace.db.query('SELECT stockcode FROM detail LIMIT 50', (err, result) => {
       if (err) {
         reject(err);
       } else {
         // only HK stocks are allowed
-        workspace.symbols = result.map(x => x.STOCKCODE + '.HK');
+        workspace.symbols = result.map(x => x.stockcode + '.HK');
         logger.info('Fetched all stocks IDs.');
         resolve(workspace);
       }
