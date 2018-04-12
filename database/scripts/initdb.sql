@@ -1,4 +1,4 @@
-CREATE TABLE daily (
+CREATE TABLE history (
     id VARCHAR(20),
     date DATE,
     high FLOAT,
