@@ -1,17 +1,22 @@
 {
-  "name": "backend",
+  "name": "api-portfolio",
   "private": true,
+  "version": "0.0.1",
   "scripts": {
     "start": "node ./bin/www",
     "apidoc": "apidoc -i routes/ -o apidoc/"
   },
   "dependencies": {
+    "lodash": "^4.17.5",
     "morgan": "^1.9.0",
+    "mysql": "^2.15.0",
     "restify": "^7.1.1",
+    "restify-cors-middleware": "^1.1.0",
     "winston": "^2.4.1"
   },
   "devDependencies": {
     "eslint": "^4.19.1",
-    "eslint-plugin-node": "^6.0.1"
+    "eslint-plugin-node": "^6.0.1",
+    "nodemon": "^1.17.3"
   }
 }

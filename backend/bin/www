@@ -1,16 +1,5 @@
-const winston = require('winston');
 const server = require('../server');
-
-// Create logger
-const logger = new (winston.Logger)({
-  transports: [
-    new (winston.transports.Console)({
-      timestamp: true,
-      colorize: true,
-      level: process.env.NODE_ENV === 'development' ? 'verbose' : 'info',
-    })
-  ]
-});
+const logger = require('../lib/logger');
 
 // Normalize port
 const normalizePort = val => {
