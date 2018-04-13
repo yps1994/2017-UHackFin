@@ -32,6 +32,7 @@ fi
 echo "Setting up database and table";
 docker container inspect ${container_db} > /dev/null 2>&1 || docker create --name ${container_db} -p ${MYSQL_PORT}:3306  \
  --mount type=bind,src="${rootdir}/database/scripts/",dst="/docker-entrypoint-initdb.d/"    \
+ --mount type=bind,src="${rootdir}/database/config/my.cnf",dst="/etc/my.cnf"                \
  -e MYSQL_DATABASE=${MYSQL_DATABASE}    \
  -e MYSQL_USER=${MYSQL_USER}            \
  -e MYSQL_PASSWORD=${MYSQL_PASSWORD}    \
