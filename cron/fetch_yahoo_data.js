@@ -58,7 +58,7 @@ const fetchSymbols = workspace => {
         reject(err);
       } else {
         // only HK stocks are allowed
-        workspace.symbols = result.map(x => x.stockcode + '.HK');
+        workspace.symbols = result.map(x => x.stockcode);
         logger.info('Fetched all stocks IDs.');
         resolve(workspace);
       }
@@ -94,6 +94,7 @@ const insertData = workspace => {
   const records = _.flatMap(workspace.quotes).filter(x => {
     return x.open !== null && x.close !== null;
   });
+  logger.info('Number of valid records: ' + records.length);
   const valid_records = records.map(x => {
     return [x.symbol, moment(x.date).format('YYYY-MM-DD'), x.high, x.low, x.open, x.close];
   });
