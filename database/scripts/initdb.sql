@@ -14,7 +14,7 @@ CREATE TABLE detail (
     name_chi VARCHAR(256),
     board_lot INT,
     PRIMARY KEY (stockcode)
-) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+);
 
 CREATE TABLE accounts (
     id MEDIUMINT NOT NULL AUTO_INCREMENT,
