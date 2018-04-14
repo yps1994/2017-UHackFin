@@ -1,4 +1,5 @@
 const logger = require('../lib/logger');
+const gate = require('../lib/gate');
 
 /** 
  * @api {get} /stock/:stock-symbol/history?start=:start&end=:end GetHistPrice
@@ -36,8 +37,9 @@ const logger = require('../lib/logger');
  *          "close": 93
  *       }, ... ]
  *     }
- * @apiError (serverError) 503 Server error, which is usually related to unavailable database
- * @apiError 404 No data available for this request.
+ * @apiError (serverError) 503 Server error, which is usually related to unavailable database.
+ * @apiError 400 Bad Request.
+ * @apiError 404 No data available.
  * @apiErrorExample Error-Response:
  *     HTTP/1.1 404 Not Found
  *     {
@@ -47,9 +49,13 @@ const logger = require('../lib/logger');
 module.exports = server => {
   server.get('/stock/:stockSymbol/history', (req, res, next) => {
     const connetor = req.con;
-    const symbol = req.params.stockSymbol;
-    const start = req.query.start;
+    const symbol = req.params.stockSymbol || '';
+    const start = req.query.start || '';
     const end = req.query.end || '2047-07-01';
+    if (!gate.isValidDate(start) || !gate.isValidDate(end)) {
+      res.json(400, {'error': 'Bad Request.'});
+      return next();
+    }
     connetor.query('SELECT * FROM history AS t1 INNER JOIN detail AS t2 ON t1.id = t2.stockcode \
     WHERE t1.id = ? AND t1.date BETWEEN ? AND ?', [symbol, start, end], (err, data) => {
       if (err) {
