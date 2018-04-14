@@ -16,7 +16,7 @@ CREATE TABLE detail (
     PRIMARY KEY (stockcode)
 );
 
-CREATE TABLE accounts (
+CREATE TABLE user (
     id MEDIUMINT NOT NULL AUTO_INCREMENT,
     email VARCHAR(256),
     passwd CHAR(64),

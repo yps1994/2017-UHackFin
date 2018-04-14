@@ -2,9 +2,9 @@ const restify = require('restify');
 const morgan = require('morgan');
 const _ = require('lodash');
 
+const routers = require('./routes');
 const logger = require('./lib/logger');
 const connector = require('./lib/connector');
-const routers = require('./routes');
 
 
 // create database connection
@@ -28,15 +28,15 @@ server.use(restify.plugins.bodyParser());
 server.use(restify.plugins.gzipResponse());
 server.use(restify.plugins.queryParser());
 
+// add connector in request attribute
 server.use((req, res, next) => {
   req.con = connector;
   return next();
 });
 
-
+// apply all routers
 _.mapValues(routers, router => {
   router(server);
 });
-
 
 module.exports = server;

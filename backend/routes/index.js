@@ -3,4 +3,5 @@
  *     Server Error
  */
 
-exports.history = require("./history.js");
+exports.history = require("./history");
+exports.user = require('./user');
