@@ -1,4 +1,5 @@
-const should = require('should');
+require('should');
+
 const gate = require('../gate');
 
 describe('#average', () => {
