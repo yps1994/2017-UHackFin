@@ -1,4 +1,4 @@
-CREATE TABLE daily (
+CREATE TABLE history (
     id VARCHAR(20),
     date DATE,
     high FLOAT,
@@ -9,12 +9,20 @@ CREATE TABLE daily (
 );
 
 CREATE TABLE detail (
-    STOCKCODE VARCHAR(20),
-    NAME_ENG VARCHAR(256),
-    NAME_CHI VARCHAR(256),
-    BOARD_LOT INT,
-    PRIMARY KEY (STOCKCODE)
-) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+    stockcode VARCHAR(20),
+    name_eng VARCHAR(256),
+    name_chi VARCHAR(256),
+    board_lot INT,
+    PRIMARY KEY (stockcode)
+);
+
+CREATE TABLE user (
+    id MEDIUMINT NOT NULL AUTO_INCREMENT,
+    email VARCHAR(256),
+    passwd CHAR(64),
+    PRIMARY KEY (id),
+    UNIQUE (email)
+);
 
 LOAD DATA INFILE '/var/lib/mysql-files/stocks_list_HK.csv'
     INTO TABLE detail

@@ -53,12 +53,12 @@ const connectDB = workspace => {
 // fetch stock symbols
 const fetchSymbols = workspace => {
   return new Promise((resolve, reject) => {
-    workspace.db.query('SELECT STOCKCODE FROM detaills', (err, result) => {
+    workspace.db.query('SELECT stockcode FROM detail LIMIT 50', (err, result) => {
       if (err) {
         reject(err);
       } else {
         // only HK stocks are allowed
-        workspace.symbols = result.map(x => x.STOCKCODE + '.HK');
+        workspace.symbols = result.map(x => x.stockcode);
         logger.info('Fetched all stocks IDs.');
         resolve(workspace);
       }
@@ -90,10 +90,11 @@ const fetchYahooData = workspace => {
 // InsertData to daily table
 // We use bulk insert to improve the performance
 const insertData = workspace => {
-  const sql_prefix = 'REPLACE INTO daily (id, date, high, low, open, close) VALUES ?';
+  const sql_prefix = 'REPLACE INTO history (id, date, high, low, open, close) VALUES ?';
   const records = _.flatMap(workspace.quotes).filter(x => {
     return x.open !== null && x.close !== null;
   });
+  logger.info('Number of valid records: ' + records.length);
   const valid_records = records.map(x => {
     return [x.symbol, moment(x.date).format('YYYY-MM-DD'), x.high, x.low, x.open, x.close];
   });
@@ -102,7 +103,7 @@ const insertData = workspace => {
       if (err) {
         reject(err);
       } else {
-        logger.info('Data is inserted into table daily');
+        logger.info('Data is inserted into table: history');
         resolve(workspace);
       }
     });

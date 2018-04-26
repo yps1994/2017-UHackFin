@@ -1,8 +1,7 @@
-var express = require('express');
-var router = express.Router();
+/** 
+ * @apiDefine serverError Error 5xx
+ *     Server Error
+ */
 
-router.get('/', function (req, res, next) {
-  res.json({'status': 'OK'});
-});
-
-module.exports = router;
+exports.history = require("./history");
+exports.user = require('./user');
